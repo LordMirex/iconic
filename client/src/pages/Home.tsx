@@ -2,7 +2,7 @@ import { useCelebrities } from "@/hooks/use-celebrities";
 import { Navbar } from "@/components/Navbar";
 import { CelebrityCard } from "@/components/CelebrityCard";
 import { motion } from "framer-motion";
-import { ArrowRight, Star, Ticket, Globe } from "lucide-react";
+import { ArrowRight, Star, Ticket, Globe, Crown } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
