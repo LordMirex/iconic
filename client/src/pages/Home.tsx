@@ -56,8 +56,8 @@ export default function Home() {
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-    Ikonik is the digital gateway to the stars. Unlock exclusive access, private VIP events, and digital membership with the worlds most inspiring creators.
-</p>
+              Iconic is the digital gateway to the stars. Unlock exclusive access, private VIP events, and digital membership with the worlds most inspiring creators.
+            </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <Link href="/#explore" className="group px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all hover:shadow-2xl hover:shadow-slate-900/20 hover:-translate-y-1 flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
             <div className="max-w-xl">
-              <h2 className="font-display text-5xl md:text-6xl font-black text-white mb-6 leading-tight">CHOOSE YOUR <br/> <span className="text-primary italic">IKON.</span></h2>
+              <h2 className="font-display text-5xl md:text-6xl font-black text-white mb-6 leading-tight">CHOOSE YOUR <br/> <span className="text-primary italic">ICON.</span></h2>
               <p className="text-slate-400 text-xl">Discover the visionaries who are redefining the relationship between creator and community.</p>
             </div>
             <div className="hidden md:flex gap-4">
@@ -183,7 +183,7 @@ export default function Home() {
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6 text-white">
               <Crown size={24} className="text-purple-400" />
-              <span className="font-display font-black text-2xl tracking-tighter uppercase">Ikonik</span>
+              <span className="font-display font-black text-2xl tracking-tighter uppercase">Iconic</span>
             </Link>
             <p className="max-w-sm mb-8">Connecting fans with their idols through unforgettable experiences and exclusive access.</p>
           </div>
@@ -204,7 +204,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-sm">
-          &copy; {new Date().getFullYear()} Ikonik. All rights reserved.
+          &copy; {new Date().getFullYear()} Iconic. All rights reserved.
         </div>
       </footer>
     </div>

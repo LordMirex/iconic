@@ -20,7 +20,7 @@ export function Navbar() {
             <Crown size={22} className="fill-current" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-black text-2xl tracking-tighter uppercase leading-none">Ikonik</span>
+            <span className="font-display font-black text-2xl tracking-tighter uppercase leading-none">Iconic</span>
             <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-400 mt-0.5">Premier Access</span>
           </div>
         </Link>
