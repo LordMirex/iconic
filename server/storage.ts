@@ -117,7 +117,7 @@ export class DatabaseStorage implements IStorage {
     const [event] = await db.select().from(events).where(eq(events.id, eventId));
     if (event) {
       await db.update(events)
-        .set({ bookedSlots: (event.bookedSlots || 0) + 1 })
+        .set({ bookedSlots: (Number(event.bookedSlots) || 0) + 1 })
         .where(eq(events.id, eventId));
     }
   }

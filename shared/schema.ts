@@ -1,59 +1,59 @@
 
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, date } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { relations, sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // === TABLE DEFINITIONS ===
 
 // Manager/Admin users (could be expanded, but for now just one manager context)
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+export const users = sqliteTable("users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   username: text("username").notNull().unique(),
   password: text("password").notNull(), // For simple auth, or we map to Replit Auth
-  isAdmin: boolean("is_admin").default(true),
+  isAdmin: integer("is_admin", { mode: 'boolean' }).default(true),
 });
 
-export const celebrities = pgTable("celebrities", {
-  id: serial("id").primaryKey(),
+export const celebrities = sqliteTable("celebrities", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(), // e.g., 'taylor-swift'
   bio: text("bio").notNull(),
   heroImage: text("hero_image").notNull(),
   avatarImage: text("avatar_image").notNull(),
   accentColor: text("accent_color").default("#3b82f6"), // Custom branding per celebrity
-  isFeatured: boolean("is_featured").default(false),
+  isFeatured: integer("is_featured", { mode: 'boolean' }).default(false),
 });
 
-export const events = pgTable("events", {
-  id: serial("id").primaryKey(),
+export const events = sqliteTable("events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   celebrityId: integer("celebrity_id").notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  date: timestamp("date").notNull(),
-  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  date: integer("date", { mode: 'timestamp' }).notNull(),
+  price: text("price").notNull(), // SQLite doesn't have decimal, using text for precision
   location: text("location").notNull(),
   type: text("type").notNull(), // 'concert', 'meet_greet', 'visitation'
   totalSlots: integer("total_slots").notNull(),
   bookedSlots: integer("booked_slots").default(0),
 });
 
-export const fanCards = pgTable("fan_cards", {
-  id: serial("id").primaryKey(),
+export const fanCards = sqliteTable("fan_cards", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   celebrityId: integer("celebrity_id").notNull(),
   cardCode: text("card_code").notNull(), // Unique ID like "TAYLOR-1234"
   email: text("email").notNull(),
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
   status: text("status").default("active"), // 'active', 'pending'
-  purchaseDate: timestamp("purchase_date").defaultNow(),
+  purchaseDate: integer("purchase_date", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
 });
 
-export const bookings = pgTable("bookings", {
-  id: serial("id").primaryKey(),
+export const bookings = sqliteTable("bookings", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   fanCardId: integer("fan_card_id").notNull(),
   eventId: integer("event_id").notNull(),
   status: text("status").default("confirmed"), // 'confirmed', 'cancelled'
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
 });
 
 // === RELATIONS ===
