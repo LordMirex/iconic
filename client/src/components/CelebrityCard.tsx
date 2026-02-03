@@ -4,6 +4,8 @@ import { type Celebrity } from "@shared/schema";
 import { ArrowUpRight, Star, Crown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+import { Button } from "@/components/ui/button";
+
 interface CelebrityCardProps {
   celebrity: Celebrity;
 }
