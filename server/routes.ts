@@ -117,7 +117,7 @@ export async function registerRoutes(
       }
 
       const booking = await storage.createBooking(input);
-      // TODO: Increment booked slots in storage
+      await storage.incrementEventBookedSlots(input.eventId);
       res.status(201).json(booking);
     } catch (e) {
       res.status(400).json({ message: "Invalid input" });

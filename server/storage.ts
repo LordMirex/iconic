@@ -30,6 +30,7 @@ export interface IStorage {
   // Bookings
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingsByFanCard(fanCardId: number): Promise<(Booking & { event: Event })[]>;
+  incrementEventBookedSlots(eventId: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -110,6 +111,15 @@ export class DatabaseStorage implements IStorage {
     .where(eq(bookings.fanCardId, fanCardId));
 
     return results.map(r => ({ ...r.booking, event: r.event }));
+  }
+
+  async incrementEventBookedSlots(eventId: number): Promise<void> {
+    const [event] = await db.select().from(events).where(eq(events.id, eventId));
+    if (event) {
+      await db.update(events)
+        .set({ bookedSlots: (event.bookedSlots || 0) + 1 })
+        .where(eq(events.id, eventId));
+    }
   }
 }
 
