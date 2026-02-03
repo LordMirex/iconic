@@ -43,6 +43,7 @@ export const fanCards = sqliteTable("fan_cards", {
   celebrityId: integer("celebrity_id").notNull(),
   cardCode: text("card_code").notNull(), // Unique ID like "TAYLOR-1234"
   email: text("email").notNull(),
+  fanName: text("fan_name").notNull().default(''),
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
   status: text("status").default("active"), // 'active', 'pending'
   purchaseDate: integer("purchase_date", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),

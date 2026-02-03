@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Badge } from "@/components/ui/badge";
 
 export default function Manager() {
   const { data: celebrities, isLoading } = useCelebrities();
@@ -141,7 +142,7 @@ export default function Manager() {
                       <FormItem>
                         <FormLabel className="font-black text-[10px] uppercase tracking-widest text-slate-400">Accent Color</FormLabel>
                         <FormControl>
-                          <Input {...field} type="color" className="h-12 rounded-xl bg-slate-50 border-none cursor-pointer p-1" />
+                          <Input {...field} value={field.value || ""} type="color" className="h-12 rounded-xl bg-slate-50 border-none cursor-pointer p-1" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
