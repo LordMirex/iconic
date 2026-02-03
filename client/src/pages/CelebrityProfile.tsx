@@ -3,8 +3,9 @@ import { useEvents } from "@/hooks/use-events";
 import { Navbar } from "@/components/Navbar";
 import { useParams, Link } from "wouter";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Ticket, Loader2 } from "lucide-react";
+import { Calendar, MapPin, Ticket, Loader2, Crown } from "lucide-react";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 export default function CelebrityProfile() {
   const { slug } = useParams<{ slug: string }>();
