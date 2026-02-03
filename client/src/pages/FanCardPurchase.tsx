@@ -1,32 +1,39 @@
 import { useCelebrity } from "@/hooks/use-celebrities";
 import { usePurchaseFanCard } from "@/hooks/use-fancards";
 import { Navbar } from "@/components/Navbar";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Loader2, CreditCard } from "lucide-react";
+import { Check, Loader2, CreditCard, ShieldCheck, Sparkles, CheckCircle2, Crown, Mail, User } from "lucide-react";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertFanCardSchema } from "@shared/schema";
-import { z } from "zod";
-
-const formSchema = insertFanCardSchema.pick({ email: true, tier: true }).extend({
-  celebrityId: z.number(),
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { insertFanCardSchema, type InsertFanCard } from "@shared/schema";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 export default function FanCardPurchase() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: celebrity } = useCelebrity(slug);
-  const { mutate, isPending } = usePurchaseFanCard();
+  const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const { data: celebrity, isLoading: loadingCeleb } = useCelebrity(slug);
+  const { mutate: purchaseCard, isPending } = usePurchaseFanCard();
   const [selectedTier, setSelectedTier] = useState<string>("Gold");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [generatedCode, setGeneratedCode] = useState("");
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<InsertFanCard>({
+    resolver: zodResolver(insertFanCardSchema),
     defaultValues: {
+      celebrityId: 0,
+      fanName: "",
+      email: "",
       tier: "Gold",
+      cardCode: "TEMP"
     }
   });
 
@@ -34,132 +41,168 @@ export default function FanCardPurchase() {
     {
       id: "Gold",
       name: "Gold Member",
-      price: "$29/year",
+      price: "$29",
       color: "from-yellow-400 to-yellow-600",
       features: ["Early access to tickets", "Digital Fan Card", "Monthly newsletter"]
     },
     {
       id: "Platinum",
       name: "Platinum VIP",
-      price: "$99/year",
+      price: "$99",
       color: "from-slate-300 to-slate-500",
-      features: ["All Gold features", "Backstage meet & greet raffle", "Exclusive merchandise discount"]
+      features: ["All Gold features", "Backstage raffle", "Merch discounts"]
     },
     {
       id: "Black",
       name: "Black Elite",
-      price: "$299/year",
+      price: "$299",
       color: "from-slate-800 to-black",
-      features: ["All Platinum features", "Private event invites", "Personalized video message"]
+      features: ["All Platinum features", "Private events", "Personal video message"]
     }
   ];
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: InsertFanCard) => {
     if (!celebrity) return;
-    mutate({ ...data, celebrityId: celebrity.id, tier: selectedTier });
+    purchaseCard({ 
+      ...data, 
+      celebrityId: celebrity.id, 
+      tier: selectedTier,
+      cardCode: `${celebrity.name.substring(0,3).toUpperCase()}-${Math.random().toString(36).substring(2,7).toUpperCase()}`
+    }, {
+      onSuccess: (newCard) => {
+        setGeneratedCode(newCard.cardCode);
+        setIsSuccess(true);
+        toast({
+          title: "Welcome to the Inner Circle!",
+          description: "Your membership is now active.",
+        });
+      }
+    });
   };
+
+  if (loadingCeleb) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <Loader2 className="animate-spin text-primary w-10 h-10" />
+      </div>
+    );
+  }
 
   if (!celebrity) return null;
 
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-2xl"
+          >
+            <Card className="rounded-[40px] border-none shadow-2xl overflow-hidden">
+              <div className="bg-slate-900 p-12 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 to-purple-500/20" />
+                <div className="relative z-10">
+                  <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <CheckCircle2 size={40} className="text-white" />
+                  </div>
+                  <h2 className="text-4xl font-display font-black text-white italic tracking-tight mb-2 uppercase">SUCCESSFUL</h2>
+                  <p className="text-white/60 text-lg">You are now a {selectedTier} member of the {celebrity.name} family.</p>
+                </div>
+              </div>
+              
+              <CardContent className="p-10 md:p-16 bg-white">
+                <div className="mb-12 text-center">
+                  <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-xs mb-2">Your Card Code</p>
+                  <div className="text-4xl font-mono font-black text-slate-900 tracking-[0.3em] bg-slate-50 py-6 rounded-2xl border-2 border-dashed border-slate-200">
+                    {generatedCode}
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={() => setLocation("/login")}
+                  className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black text-lg hover:bg-slate-800 shadow-xl transition-all"
+                >
+                  GO TO LOGIN
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans pb-20">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
       <Navbar />
-      
-      <div className="container mx-auto px-4 pt-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="font-display text-4xl font-bold mb-4">Select Your Membership</h1>
-            <p className="text-slate-600">Join the {celebrity.name} official fan club today.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {tiers.map((tier) => (
-              <div 
-                key={tier.id}
-                onClick={() => {
-                  setSelectedTier(tier.id);
-                  setValue("tier", tier.id);
-                }}
-                className={clsx(
-                  "relative rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2",
-                  selectedTier === tier.id 
-                    ? "border-primary shadow-xl scale-105 bg-white z-10" 
-                    : "border-transparent bg-white shadow-sm hover:shadow-md opacity-80 hover:opacity-100"
-                )}
-              >
-                {selectedTier === tier.id && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-white text-xs font-bold rounded-full">
-                    SELECTED
-                  </div>
-                )}
-                
-                {/* Visual Card Representation */}
-                <div className={`h-32 rounded-xl bg-gradient-to-br ${tier.color} mb-6 shadow-inner flex flex-col justify-between p-4 text-white`}>
-                  <div className="flex justify-between items-start">
-                    <span className="font-display font-bold text-lg opacity-90">StarPass</span>
-                    <span className="text-xs opacity-75">{tier.id.toUpperCase()}</span>
-                  </div>
-                  <div>
-                    <div className="text-xs opacity-75 mb-1">{celebrity.name}</div>
-                    <div className="font-mono text-sm tracking-widest opacity-90">•••• •••• ••••</div>
-                  </div>
-                </div>
-
-                <h3 className="font-display text-2xl font-bold mb-1">{tier.name}</h3>
-                <div className="text-xl text-slate-500 font-medium mb-6">{tier.price}</div>
-                
-                <ul className="space-y-3 mb-8">
-                  {tier.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                      <Check size={16} className="text-green-500 mt-0.5 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl border border-slate-100">
-            <h3 className="font-display text-2xl font-bold mb-6">Complete Purchase</h3>
+      <div className="flex-1 container mx-auto px-4 py-20 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <Badge className="bg-primary/10 text-primary border-none font-black text-[10px] uppercase tracking-[0.2em] mb-6 px-4 py-1.5 rounded-full">
+              Verified Fan Experience
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-display font-black text-slate-900 leading-[0.9] tracking-tighter italic mb-8">
+              JOIN THE <br/> <span className="text-primary">{celebrity.name.toUpperCase()}</span> <br/>COMMUNITY.
+            </h1>
             
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700">Email Address</label>
-                <input 
-                  {...register("email")}
-                  type="email" 
-                  placeholder="you@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                />
-                {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
-              </div>
-
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-3">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400 border border-slate-200">
-                  <CreditCard size={20} />
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-slate-900">Payment Method</div>
-                  <div className="text-xs text-slate-500">Secure checkout via Stripe</div>
-                </div>
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={isPending}
-                className="w-full py-4 rounded-xl bg-slate-900 text-white font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isPending ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Loader2 className="animate-spin" /> Processing...
-                  </span>
-                ) : (
-                  `Pay & Join as ${selectedTier} Member`
-                )}
-              </button>
-            </form>
+            <div className="grid sm:grid-cols-2 gap-8 mt-12">
+               {tiers.map(tier => (
+                 <div key={tier.id} className={clsx(
+                   "p-6 rounded-[32px] border-2 transition-all cursor-pointer",
+                   selectedTier === tier.id ? "bg-white border-primary shadow-xl" : "bg-slate-50 border-transparent opacity-60"
+                 )} onClick={() => setSelectedTier(tier.id)}>
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tier.color} mb-4`} />
+                    <h4 className="font-black text-slate-900 uppercase tracking-tight">{tier.name}</h4>
+                    <p className="text-2xl font-display font-black text-primary mt-1">{tier.price}</p>
+                 </div>
+               ))}
+            </div>
           </div>
+
+          <Card className="rounded-[40px] border-none shadow-2xl overflow-hidden">
+            <CardHeader className="p-10 bg-slate-900 text-white">
+               <CardTitle className="text-3xl font-display font-black italic uppercase">Get Your Pass</CardTitle>
+               <CardDescription className="text-white/40">Enter your details to generate your digital membership.</CardDescription>
+            </CardHeader>
+            <CardContent className="p-10 bg-white">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="fanName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-black text-[10px] uppercase tracking-widest text-slate-400">Full Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="h-14 rounded-xl bg-slate-50 border-none font-bold" placeholder="Your Name" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-black text-[10px] uppercase tracking-widest text-slate-400">Email Address</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="email" className="h-14 rounded-xl bg-slate-50 border-none font-bold" placeholder="Email" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button type="submit" disabled={isPending} className="w-full h-16 rounded-2xl bg-slate-900 text-white font-black text-xl hover:bg-primary transition-all shadow-xl">
+                    {isPending ? <Loader2 className="animate-spin" /> : "COMPLETE JOINING"}
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
