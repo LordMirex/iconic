@@ -146,6 +146,9 @@ export default function FanCardPurchase() {
             <h1 className="text-5xl md:text-7xl font-display font-black text-slate-900 leading-[0.9] tracking-tighter italic mb-8">
               JOIN THE <br/> <span className="text-primary">{celebrity.name.toUpperCase()}</span> <br/>COMMUNITY.
             </h1>
+            <p className="text-slate-500 text-lg mb-12 max-w-lg leading-relaxed font-medium">
+              Become part of the inner circle. Get priority access to events, exclusive content, and a direct line to your favorite artists.
+            </p>
             
             <div className="grid sm:grid-cols-2 gap-8 mt-12">
                {tiers.map(tier => (
