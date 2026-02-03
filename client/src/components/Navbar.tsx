@@ -13,8 +13,8 @@ export function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] w-full border-b border-slate-200/50 bg-white/70 backdrop-blur-xl transition-all">
-      <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between max-w-7xl">
+    <nav className="fixed top-0 left-0 right-0 z-[100] w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-2xl transition-all">
+      <div className="container mx-auto px-4 md:px-8 h-16 flex items-center justify-between max-w-7xl">
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-2xl shadow-slate-900/20 transition-all group-hover:scale-110 group-hover:-rotate-3 group-hover:bg-primary">
             <Crown size={22} className="fill-current" />

@@ -29,7 +29,7 @@ export function CelebrityCard({ celebrity }: CelebrityCardProps) {
         <div className="absolute top-6 left-6 right-6 flex justify-between items-start z-10">
           <div className="flex gap-2">
             {celebrity.isFeatured && (
-              <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow-lg shadow-primary/20">
+              <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 font-black text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
                 Trending
               </Badge>
             )}

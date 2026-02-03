@@ -44,7 +44,7 @@ export default function Home() {
               Over 1M+ fans joined worldwide
             </div>
             
-            <h1 className="font-display text-6xl md:text-8xl font-black text-slate-900 leading-[0.95] tracking-tight mb-8">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-8">
               Meet your <br/>
               <span className="relative inline-block">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-pink-500">Heroes</span>
@@ -55,7 +55,7 @@ export default function Home() {
               <span className="text-slate-900"> Live.</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
               Iconic is the digital gateway to the stars. Unlock exclusive access, private VIP events, and digital membership with the worlds most inspiring creators.
             </p>
             
