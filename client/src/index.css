@@ -63,4 +63,15 @@
   .premium-gradient {
     @apply bg-gradient-to-br from-slate-900 to-slate-800 text-white;
   }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+    display: flex;
+    width: max-content;
+  }
 }

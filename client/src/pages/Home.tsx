@@ -70,13 +70,23 @@ export default function Home() {
             </div>
 
             {/* Trusted by section */}
-            <div className="mt-20 pt-10 border-t border-slate-100 flex flex-col items-center gap-6">
+            <div className="mt-20 pt-10 border-t border-slate-100 flex flex-col items-center gap-6 overflow-hidden">
               <p className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400">Featured in</p>
-              <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale">
-                <div className="font-display font-black text-2xl tracking-tighter italic">VOGUE</div>
-                <div className="font-display font-black text-2xl tracking-tighter italic">FORBES</div>
-                <div className="font-display font-black text-2xl tracking-tighter italic">WIRED</div>
-                <div className="font-display font-black text-2xl tracking-tighter italic">BILLBOARD</div>
+              <div className="relative w-full">
+                <div className="flex animate-marquee whitespace-nowrap gap-16 items-center opacity-40 grayscale">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex gap-16 items-center">
+                      <div className="font-display font-black text-2xl tracking-tighter italic">VOGUE</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">FORBES</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">WIRED</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">BILLBOARD</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">ROLLING STONE</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">GQ</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">VARIETY</div>
+                      <div className="font-display font-black text-2xl tracking-tighter italic">THE VERGE</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
