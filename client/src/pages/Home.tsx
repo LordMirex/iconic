@@ -42,9 +42,9 @@ export default function Home() {
             <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-6 border border-blue-100">
               The Premier Fan Experience Platform
             </span>
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-slate-900 leading-[1.1] mb-6">
-              Connect with your <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Favorite Icons</span>
+            <h1 className="font-display text-5xl md:text-7xl font-black text-slate-900 leading-[1.05] tracking-tight mb-6">
+              Access the <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">Unattainable</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
               Unlock exclusive access, VIP events, and personal moments with the world's most inspiring celebrities. Your pass to the extraordinary awaits.
@@ -136,8 +136,8 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-7xl grid md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6 text-white">
-              <Crown size={24} />
-              <span className="font-display font-bold text-2xl">StarPass</span>
+              <Crown size={24} className="text-purple-400" />
+              <span className="font-display font-black text-2xl tracking-tighter uppercase">Iconic</span>
             </Link>
             <p className="max-w-sm mb-8">Connecting fans with their idols through unforgettable experiences and exclusive access.</p>
           </div>
@@ -158,7 +158,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-sm">
-          &copy; {new Date().getFullYear()} StarPass Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} Iconic. All rights reserved.
         </div>
       </footer>
     </div>
