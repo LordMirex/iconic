@@ -1,11 +1,12 @@
 
 import { db } from "./db";
 import { 
-  celebrities, events, fanCards, bookings, users,
+  celebrities, events, fanCards, bookings, users, fanCardTiers,
   type Celebrity, type InsertCelebrity,
   type Event, type InsertEvent,
   type FanCard, type InsertFanCard,
   type Booking, type InsertBooking,
+  type FanCardTier, type InsertFanCardTier,
   type FanLoginRequest
 } from "@shared/schema";
 import { eq, and } from "drizzle-orm";
@@ -26,6 +27,10 @@ export interface IStorage {
   createFanCard(card: InsertFanCard): Promise<FanCard>;
   getFanCardByCodeAndEmail(code: string, email: string): Promise<FanCard | undefined>;
   getFanCard(id: number): Promise<FanCard | undefined>;
+  
+  // Fan Card Tiers
+  getFanCardTiers(): Promise<FanCardTier[]>;
+  createFanCardTier(tier: InsertFanCardTier): Promise<FanCardTier>;
   
   // Bookings
   createBooking(booking: InsertBooking): Promise<Booking>;
@@ -120,6 +125,15 @@ export class DatabaseStorage implements IStorage {
         .set({ bookedSlots: (Number(event.bookedSlots) || 0) + 1 })
         .where(eq(events.id, eventId));
     }
+  }
+
+  async getFanCardTiers(): Promise<FanCardTier[]> {
+    return await db.select().from(fanCardTiers);
+  }
+
+  async createFanCardTier(tier: InsertFanCardTier): Promise<FanCardTier> {
+    const [result] = await db.insert(fanCardTiers).values(tier).returning();
+    return result;
   }
 }
 
