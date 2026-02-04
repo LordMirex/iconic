@@ -23,6 +23,13 @@ export const celebrities = sqliteTable("celebrities", {
   avatarImage: text("avatar_image").notNull(),
   accentColor: text("accent_color").default("#3b82f6"), // Custom branding per celebrity
   isFeatured: integer("is_featured", { mode: 'boolean' }).default(false),
+  // Extended fields
+  category: text("category").notNull().default("Musician"), // 'Musician', 'Actor', 'Athlete', 'Creator'
+  fullBio: text("full_bio"), // Extended biography
+  careerStart: integer("career_start"), // Year they started their career
+  accomplishments: text("accomplishments"), // JSON array of achievements
+  socialMedia: text("social_media"), // JSON object with social links
+  gallery: text("gallery"), // JSON array of image URLs
 });
 
 export const events = sqliteTable("events", {
@@ -45,6 +52,7 @@ export const fanCards = sqliteTable("fan_cards", {
   email: text("email").notNull(),
   fanName: text("fan_name").notNull().default(''),
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
+  cardType: text("card_type").notNull().default("digital"), // 'digital', 'physical'
   status: text("status").default("active"), // 'active', 'pending'
   purchaseDate: integer("purchase_date", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
 });
@@ -55,6 +63,15 @@ export const bookings = sqliteTable("bookings", {
   eventId: integer("event_id").notNull(),
   status: text("status").default("confirmed"), // 'confirmed', 'cancelled'
   createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
+});
+
+export const fanCardTiers = sqliteTable("fan_card_tiers", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull().unique(), // 'Gold', 'Platinum', 'Black'
+  basePrice: text("base_price").notNull(), // Base price for the tier
+  features: text("features").notNull(), // JSON array of features
+  description: text("description").notNull(),
+  color: text("color").notNull().default("#FFD700"), // Color theme for the tier
 });
 
 // === RELATIONS ===
@@ -97,6 +114,7 @@ export const insertCelebritySchema = createInsertSchema(celebrities).omit({ id: 
 export const insertEventSchema = createInsertSchema(events).omit({ id: true, bookedSlots: true });
 export const insertFanCardSchema = createInsertSchema(fanCards).omit({ id: true, purchaseDate: true, status: true });
 export const insertBookingSchema = createInsertSchema(bookings).omit({ id: true, createdAt: true, status: true });
+export const insertFanCardTierSchema = createInsertSchema(fanCardTiers).omit({ id: true });
 
 // === TYPES ===
 
@@ -111,6 +129,9 @@ export type InsertFanCard = z.infer<typeof insertFanCardSchema>;
 
 export type Booking = typeof bookings.$inferSelect;
 export type InsertBooking = z.infer<typeof insertBookingSchema>;
+
+export type FanCardTier = typeof fanCardTiers.$inferSelect;
+export type InsertFanCardTier = z.infer<typeof insertFanCardTierSchema>;
 
 // Auth types
 export const fanLoginSchema = z.object({
