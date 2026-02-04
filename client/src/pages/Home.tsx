@@ -45,27 +45,28 @@ export default function Home() {
             </div>
             
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 leading-[1.1] md:leading-[1.05] tracking-tight mb-8">
-              Meet your <br/>
+              The Ultimate <br/>
               <span className="relative inline-block">
-                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-pink-500">Heroes</span>
+                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-pink-500">Celebrity</span>
                 <svg className="absolute -bottom-2 left-0 w-full h-3 text-primary/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                   <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
                 </svg>
               </span>
-              <span className="text-slate-900"> Live.</span>
+              <br/>
+              <span className="text-slate-900">Management Platform</span>
             </h1>
             
             <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
-              Iconic is the digital gateway to the stars. Unlock exclusive access, private VIP events, and digital membership with the worlds most inspiring creators.
+              ICONIC connects fans directly with the world's biggest stars. Get exclusive access to events, VIP experiences, and personalized fan memberships - all in one platform.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <Link href="/#explore" className="group px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all hover:shadow-2xl hover:shadow-slate-900/20 hover:-translate-y-1 flex items-center gap-2">
-                Explore Talent 
+                Browse Celebrities 
                 <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="/login" className="px-10 py-5 bg-white text-slate-900 border-2 border-slate-100 rounded-2xl font-bold text-lg hover:border-primary/20 hover:bg-slate-50 transition-all hover:shadow-xl hover:shadow-slate-200/50">
-                Fan Portal
+                Access Your Account
               </Link>
             </div>
 
