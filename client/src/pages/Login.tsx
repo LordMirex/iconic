@@ -28,8 +28,9 @@ export default function Login() {
 
   const onSubmit = (data: FanLoginRequest) => {
     mutate(data, {
-      onSuccess: (user) => {
-        localStorage.setItem("fan_id", user.id.toString());
+      onSuccess: (response: any) => {
+        localStorage.setItem("fan_id", response.fanCard.id.toString());
+        localStorage.setItem("fan_token", response.token);
         toast({
           title: "Welcome back!",
           description: "Successfully logged into your fan dashboard.",

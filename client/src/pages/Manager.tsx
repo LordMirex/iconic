@@ -3,20 +3,51 @@ import { useCelebrities, useCreateCelebrity } from "@/hooks/use-celebrities";
 import { useForm } from "react-hook-form";
 import { insertCelebritySchema, type InsertCelebrity } from "@shared/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Plus, Users, Calendar, Star, LayoutDashboard } from "lucide-react";
+import { Loader2, Plus, Users, Calendar, Star, LayoutDashboard, LogIn } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Badge } from "@/components/ui/badge";
+import { useLocation } from "wouter";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Manager() {
   const { data: celebrities, isLoading } = useCelebrities();
   const { mutate, isPending } = useCreateCelebrity();
   const [open, setOpen] = useState(false);
+  const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("manager_token"));
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // Show login state if not token
+    }
+  }, [isLoggedIn]);
+
+  const loginForm = useForm({
+    defaultValues: {
+      username: "",
+      password: ""
+    }
+  });
+
+  const onLogin = async (data: any) => {
+    try {
+      const res = await apiRequest("POST", "/api/auth/login", data);
+      const result = await res.json();
+      localStorage.setItem("manager_token", result.token);
+      setIsLoggedIn(true);
+      toast({ title: "Manager logged in" });
+    } catch (e) {
+      toast({ title: "Login failed", variant: "destructive" });
+    }
+  };
 
   const form = useForm<InsertCelebrity>({
     resolver: zodResolver(insertCelebritySchema),
@@ -30,6 +61,53 @@ export default function Manager() {
       isFeatured: false
     }
   });
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md border-none shadow-2xl rounded-3xl overflow-hidden">
+          <div className="bg-slate-900 p-8 text-white text-center">
+            <LayoutDashboard className="w-12 h-12 mx-auto mb-4 text-primary" />
+            <h1 className="text-2xl font-display font-bold">Manager Portal</h1>
+            <p className="text-white/60 text-sm mt-2">Restricted access for talent managers only.</p>
+          </div>
+          <CardContent className="p-8">
+            <Form {...loginForm}>
+              <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                <FormField
+                  control={loginForm.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="admin" className="h-12 rounded-xl" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={loginForm.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="password" placeholder="••••••••" className="h-12 rounded-xl" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full h-12 rounded-xl bg-slate-900 font-bold">
+                  Login to Portal
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const onSubmit = (data: InsertCelebrity) => {
     mutate(data, {
