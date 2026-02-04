@@ -54,6 +54,12 @@ export async function registerRoutes(
 
   // --- Fan Cards ---
 
+  // Get fan card tiers
+  app.get("/api/fan-card-tiers", async (req, res) => {
+    const tiers = await storage.getFanCardTiers();
+    res.json(tiers);
+  });
+
   app.post(api.fanCards.purchase.path, async (req, res) => {
     try {
       // Input has celebrityId, email, tier. 
