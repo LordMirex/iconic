@@ -125,15 +125,13 @@ export async function registerRoutes(
   });
   
   // --- Manager Auth ---
-  
-  app.post(api.auth.login.path, async (req, res) => {
+
+  app.post("/api/manager/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      // In a real app, we would verify against a database and use hashed passwords.
-      // For this MVP, we use the simple credentials requested.
       if (username === "admin" && password === "admin") {
-        res.json({ 
-          success: true, 
+        res.json({
+          success: true,
           token: "manager_token_admin",
           user: { id: 1, username: "admin", isAdmin: true }
         });

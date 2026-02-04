@@ -39,7 +39,7 @@ export default function Manager() {
 
   const onLogin = async (data: any) => {
     try {
-      const res = await apiRequest("POST", "/api/auth/login", data);
+      const res = await apiRequest("POST", "/api/manager/login", data);
       const result = await res.json();
       localStorage.setItem("manager_token", result.token);
       setIsLoggedIn(true);
