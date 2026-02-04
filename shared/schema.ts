@@ -18,7 +18,13 @@ export const celebrities = sqliteTable("celebrities", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(), // e.g., 'taylor-swift'
+  category: text("category").notNull(), // 'musician', 'actor', 'athlete', 'creator'
   bio: text("bio").notNull(),
+  fullBio: text("full_bio"), // Detailed biography
+  careerStart: integer("career_start"), // Year career started
+  accomplishments: text("accomplishments"), // JSON array of accomplishments
+  socialMedia: text("social_media"), // JSON object with social media links and follower counts
+  gallery: text("gallery"), // JSON array of gallery image URLs
   heroImage: text("hero_image").notNull(),
   avatarImage: text("avatar_image").notNull(),
   accentColor: text("accent_color").default("#3b82f6"), // Custom branding per celebrity
@@ -29,7 +35,9 @@ export const events = sqliteTable("events", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   celebrityId: integer("celebrity_id").notNull(),
   title: text("title").notNull(),
+  category: text("category"), // 'concert', 'tour', 'meet_greet', 'screening', 'match'
   description: text("description").notNull(),
+  imageUrl: text("image_url"), // Event poster/image
   date: integer("date", { mode: 'timestamp' }).notNull(),
   price: text("price").notNull(), // SQLite doesn't have decimal, using text for precision
   location: text("location").notNull(),
@@ -45,6 +53,8 @@ export const fanCards = sqliteTable("fan_cards", {
   email: text("email").notNull(),
   fanName: text("fan_name").notNull().default(''),
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
+  cardType: text("card_type").default("digital"), // 'digital', 'physical'
+  price: text("price"), // Tier price at time of purchase
   status: text("status").default("active"), // 'active', 'pending'
   purchaseDate: integer("purchase_date", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
 });

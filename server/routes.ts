@@ -150,73 +150,42 @@ export async function registerRoutes(
 }
 
 async function seedDatabase() {
+  const { seedCelebrities, generateEventsForCelebrity } = await import("./seed-data");
+  
   const celebs = await storage.getCelebrities();
   if (celebs.length === 0) {
-    console.log("Seeding database...");
+    console.log("Seeding database with 30 celebrities...");
     
-    const celeb1 = await storage.createCelebrity({
-      name: "Taylor Swift",
-      slug: "taylor-swift",
-      bio: "Global superstar, singer-songwriter, and 14-time Grammy winner known for her narrative songwriting.",
-      heroImage: "https://images.unsplash.com/photo-1540575467063-17e6fc485380?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1493229656367-108529a9792e?auto=format&fit=crop&q=80&w=400",
-      accentColor: "#be123c", // Rose red
-      isFeatured: true
-    });
-
-    const celeb2 = await storage.createCelebrity({
-      name: "The Weeknd",
-      slug: "the-weeknd",
-      bio: "Canadian singer, songwriter, and record producer. Known for his sonic versatility and dark lyricism.",
-      heroImage: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=400",
-      accentColor: "#000000",
-      isFeatured: true
-    });
-
-    // Seed Events
-    await storage.createEvent({
-      celebrityId: celeb1.id,
-      title: "Eras Tour - London",
-      description: "The final leg of the European tour at Wembley Stadium.",
-      date: new Date("2025-08-15"),
-      price: "150.00",
-      location: "Wembley Stadium, London",
-      type: "concert",
-      totalSlots: 90000
-    });
-
-    await storage.createEvent({
-      celebrityId: celeb1.id,
-      title: "VIP Meet & Greet",
-      description: "Exclusive backstage access and photo opportunity.",
-      date: new Date("2025-08-15"),
-      price: "500.00",
-      location: "Wembley Stadium, London",
-      type: "meet_greet",
-      totalSlots: 50
-    });
+    const celebsData = await seedCelebrities();
     
-    await storage.createEvent({
-      celebrityId: celeb2.id,
-      title: "After Hours - Tokyo",
-      description: "Live performance at Tokyo Dome.",
-      date: new Date("2025-09-20"),
-      price: "120.00",
-      location: "Tokyo Dome",
-      type: "concert",
-      totalSlots: 55000
-    });
+    // Create all celebrities
+    for (const celebData of celebsData) {
+      const celeb = await storage.createCelebrity(celebData);
+      
+      // Generate events for each celebrity
+      const events = generateEventsForCelebrity(celeb.id, celebData.category, celebData.name);
+      for (const eventData of events) {
+        await storage.createEvent(eventData);
+      }
+    }
 
-    // Seed a Fan Card
-    await storage.createFanCard({
-      celebrityId: celeb1.id,
-      cardCode: "TAYLOR", // storage will append suffix -> TAYLOR-XXXX
-      email: "demo@fan.com",
-      tier: "Platinum",
-      status: "active"
-    });
+    // Seed a demo fan card
+    const taylorSwift = celebsData.find(c => c.slug === 'taylor-swift');
+    if (taylorSwift) {
+      const celeb = await storage.getCelebrityBySlug('taylor-swift');
+      if (celeb) {
+        await storage.createFanCard({
+          celebrityId: celeb.id,
+          cardCode: "TAYLOR",
+          email: "demo@fan.com",
+          fanName: "Demo Fan",
+          tier: "Platinum",
+          cardType: "digital",
+          price: "2000.00"
+        });
+      }
+    }
     
-    console.log("Database seeded successfully");
+    console.log("Database seeded successfully with 30 celebrities and events!");
   }
 }
