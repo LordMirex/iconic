@@ -1,5 +1,6 @@
 import { useCelebrity } from "@/hooks/use-celebrities";
 import { usePurchaseFanCard } from "@/hooks/use-fancards";
+import { useFanCardTiers } from "@/hooks/use-fan-card-tiers";
 import { Navbar } from "@/components/Navbar";
 import { useParams, useLocation } from "wouter";
 import { useState } from "react";
@@ -15,14 +16,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function FanCardPurchase() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { data: celebrity, isLoading: loadingCeleb } = useCelebrity(slug);
+  const { data: fanCardTiers, isLoading: loadingTiers } = useFanCardTiers();
   const { mutate: purchaseCard, isPending } = usePurchaseFanCard();
   const [selectedTier, setSelectedTier] = useState<string>("Gold");
+  const [cardType, setCardType] = useState<string>("digital");
   const [isSuccess, setIsSuccess] = useState(false);
   const [generatedCode, setGeneratedCode] = useState("");
 
@@ -33,33 +37,10 @@ export default function FanCardPurchase() {
       fanName: "",
       email: "",
       tier: "Gold",
+      cardType: "digital",
       cardCode: "TEMP"
     }
   });
-
-  const tiers = [
-    {
-      id: "Gold",
-      name: "Gold Member",
-      price: "$29",
-      color: "from-yellow-400 to-yellow-600",
-      features: ["Early access to tickets", "Digital Fan Card", "Monthly newsletter"]
-    },
-    {
-      id: "Platinum",
-      name: "Platinum VIP",
-      price: "$99",
-      color: "from-slate-300 to-slate-500",
-      features: ["All Gold features", "Backstage raffle", "Merch discounts"]
-    },
-    {
-      id: "Black",
-      name: "Black Elite",
-      price: "$299",
-      color: "from-slate-800 to-black",
-      features: ["All Platinum features", "Private events", "Personal video message"]
-    }
-  ];
 
   const onSubmit = (data: InsertFanCard) => {
     if (!celebrity) return;
@@ -67,6 +48,7 @@ export default function FanCardPurchase() {
       ...data, 
       celebrityId: celebrity.id, 
       tier: selectedTier,
+      cardType: cardType,
       cardCode: `${celebrity.name.substring(0,3).toUpperCase()}-${Math.random().toString(36).substring(2,7).toUpperCase()}`
     }, {
       onSuccess: (newCard) => {
@@ -80,7 +62,7 @@ export default function FanCardPurchase() {
     });
   };
 
-  if (loadingCeleb) {
+  if (loadingCeleb || loadingTiers) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <Loader2 className="animate-spin text-primary w-10 h-10" />
@@ -150,17 +132,57 @@ export default function FanCardPurchase() {
               Become part of the inner circle. Get priority access to events, exclusive content, and a direct line to your favorite artists.
             </p>
             
-            <div className="grid sm:grid-cols-2 gap-8 mt-12">
-               {tiers.map(tier => (
-                 <div key={tier.id} className={clsx(
-                   "p-6 rounded-[32px] border-2 transition-all cursor-pointer",
-                   selectedTier === tier.id ? "bg-white border-primary shadow-xl" : "bg-slate-50 border-transparent opacity-60"
-                 )} onClick={() => setSelectedTier(tier.id)}>
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tier.color} mb-4`} />
-                    <h4 className="font-black text-slate-900 uppercase tracking-tight">{tier.name}</h4>
-                    <p className="text-2xl font-display font-black text-primary mt-1">{tier.price}</p>
-                 </div>
-               ))}
+            {/* Tier Selection */}
+            <div className="space-y-6">
+              <h3 className="font-display text-2xl font-black text-slate-900 tracking-tight">Select Your Tier</h3>
+              <div className="grid gap-6">
+                {fanCardTiers?.map(tier => {
+                  const features = JSON.parse(tier.features);
+                  const tierColorMap: Record<string, string> = {
+                    Gold: "from-yellow-400 to-yellow-600",
+                    Platinum: "from-slate-300 to-slate-500",
+                    Black: "from-slate-800 to-black"
+                  };
+                  
+                  return (
+                    <motion.div 
+                      key={tier.id} 
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={clsx(
+                        "p-6 rounded-[32px] border-2 transition-all cursor-pointer relative overflow-hidden",
+                        selectedTier === tier.name 
+                          ? "bg-white border-primary shadow-2xl" 
+                          : "bg-slate-50 border-slate-200 hover:border-slate-300"
+                      )} 
+                      onClick={() => setSelectedTier(tier.name)}
+                    >
+                      {selectedTier === tier.name && (
+                        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                          <Check size={16} className="text-white" />
+                        </div>
+                      )}
+                      
+                      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${tierColorMap[tier.name]} mb-4 shadow-lg`} />
+                      <h4 className="font-display text-2xl font-black text-slate-900 uppercase tracking-tight mb-1">{tier.name}</h4>
+                      <p className="text-slate-500 text-sm mb-4">{tier.description}</p>
+                      <div className="text-4xl font-display font-black text-primary mb-6">${tier.basePrice}</div>
+                      
+                      <div className="space-y-3 border-t border-slate-200 pt-4">
+                        {features.slice(0, 3).map((feature: string, idx: number) => (
+                          <div key={idx} className="flex items-center gap-3 text-slate-600 text-sm font-medium">
+                            <CheckCircle2 size={16} className="text-primary shrink-0" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                        {features.length > 3 && (
+                          <p className="text-slate-400 text-xs">+ {features.length - 3} more benefits</p>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
@@ -172,6 +194,40 @@ export default function FanCardPurchase() {
             <CardContent className="p-10 bg-white">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  
+                  {/* Card Type Selection */}
+                  <div className="space-y-3">
+                    <FormLabel className="font-black text-[10px] uppercase tracking-widest text-slate-400">Card Type</FormLabel>
+                    <RadioGroup value={cardType} onValueChange={setCardType} className="grid grid-cols-2 gap-4">
+                      <div className={clsx(
+                        "p-4 rounded-2xl border-2 cursor-pointer transition-all",
+                        cardType === "digital" ? "border-primary bg-primary/5" : "border-slate-200 hover:border-slate-300"
+                      )} onClick={() => setCardType("digital")}>
+                        <RadioGroupItem value="digital" id="digital" className="hidden" />
+                        <div className="flex items-center gap-3">
+                          <CreditCard size={20} className="text-primary" />
+                          <div>
+                            <p className="font-bold text-slate-900">Digital</p>
+                            <p className="text-xs text-slate-500">Instant access</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={clsx(
+                        "p-4 rounded-2xl border-2 cursor-pointer transition-all",
+                        cardType === "physical" ? "border-primary bg-primary/5" : "border-slate-200 hover:border-slate-300"
+                      )} onClick={() => setCardType("physical")}>
+                        <RadioGroupItem value="physical" id="physical" className="hidden" />
+                        <div className="flex items-center gap-3">
+                          <Sparkles size={20} className="text-primary" />
+                          <div>
+                            <p className="font-bold text-slate-900">Physical</p>
+                            <p className="text-xs text-slate-500">Ships in 7-10 days</p>
+                          </div>
+                        </div>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                  
                   <FormField
                     control={form.control}
                     name="fanName"
