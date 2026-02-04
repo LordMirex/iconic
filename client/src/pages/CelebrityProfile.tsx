@@ -3,9 +3,11 @@ import { useEvents } from "@/hooks/use-events";
 import { Navbar } from "@/components/Navbar";
 import { useParams, Link } from "wouter";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Ticket, Loader2, Crown } from "lucide-react";
+import { Calendar, MapPin, Ticket, Loader2, Crown, Award, TrendingUp, Instagram, Twitter, Youtube, Music } from "lucide-react";
+import { FaTiktok } from "react-icons/fa";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function CelebrityProfile() {
   const { slug } = useParams<{ slug: string }>();
@@ -86,6 +88,53 @@ export default function CelebrityProfile() {
       </div>
 
       <div className="container mx-auto px-4 max-w-7xl py-16 relative z-10">
+        {/* Career Stats & Social Media */}
+        <div className="grid md:grid-cols-3 gap-6 -mt-32 mb-16 relative z-20">
+          {celebrity.careerStart && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-100"
+            >
+              <TrendingUp className="w-10 h-10 text-primary mb-4" />
+              <div className="text-4xl font-black text-slate-900 mb-2">{new Date().getFullYear() - celebrity.careerStart}+</div>
+              <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">Years Active</div>
+            </motion.div>
+          )}
+          
+          {celebrity.socialMedia && (() => {
+            try {
+              const social = JSON.parse(celebrity.socialMedia);
+              const totalFollowers = (social.instagram?.followers || 0) + (social.twitter?.followers || 0);
+              return (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-100"
+                >
+                  <Award className="w-10 h-10 text-primary mb-4" />
+                  <div className="text-4xl font-black text-slate-900 mb-2">{(totalFollowers / 1000000).toFixed(0)}M+</div>
+                  <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">Total Followers</div>
+                </motion.div>
+              );
+            } catch (e) {
+              return null;
+            }
+          })()}
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-100"
+          >
+            <Music className="w-10 h-10 text-primary mb-4" />
+            <div className="text-4xl font-black text-slate-900 mb-2 capitalize">{celebrity.category}</div>
+            <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">Category</div>
+          </motion.div>
+        </div>
+
         <div className="grid lg:grid-cols-12 gap-12">
           
           {/* Main Content - Events */}
@@ -167,11 +216,134 @@ export default function CelebrityProfile() {
                 </div>
               )}
             </div>
+
+            {/* Accomplishments Section */}
+            {celebrity.accomplishments && (() => {
+              try {
+                const accomplishments = JSON.parse(celebrity.accomplishments);
+                return (
+                  <div className="bg-white rounded-[32px] p-10 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100">
+                    <h2 className="font-display text-4xl font-black text-slate-900 italic tracking-tight mb-8 flex items-center gap-4">
+                      <Award className="text-primary" size={40} />
+                      ACHIEVEMENTS
+                    </h2>
+                    <div className="grid gap-4">
+                      {accomplishments.map((achievement: string, index: number) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-start gap-4 p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-primary/20 hover:bg-white transition-all"
+                        >
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black shrink-0 mt-1">
+                            {index + 1}
+                          </div>
+                          <p className="text-slate-700 font-medium text-lg leading-relaxed">{achievement}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              } catch (e) {
+                return null;
+              }
+            })()}
+
+            {/* Social Media Section */}
+            {celebrity.socialMedia && (() => {
+              try {
+                const social = JSON.parse(celebrity.socialMedia);
+                const formatFollowers = (num: number) => {
+                  if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+                  if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
+                  return num.toString();
+                };
+                
+                return (
+                  <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-[32px] p-10 md:p-12 shadow-2xl overflow-hidden relative">
+                    <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
+                    <div className="relative z-10">
+                      <h2 className="font-display text-4xl font-black text-white italic tracking-tight mb-8">
+                        CONNECT
+                      </h2>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {social.instagram && (
+                          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all group cursor-pointer">
+                            <Instagram className="w-10 h-10 text-pink-400 mb-4" />
+                            <div className="text-3xl font-black text-white mb-2">{formatFollowers(social.instagram.followers)}</div>
+                            <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Instagram Followers</div>
+                          </div>
+                        )}
+                        {social.twitter && (
+                          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all group cursor-pointer">
+                            <Twitter className="w-10 h-10 text-blue-400 mb-4" />
+                            <div className="text-3xl font-black text-white mb-2">{formatFollowers(social.twitter.followers)}</div>
+                            <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">Twitter Followers</div>
+                          </div>
+                        )}
+                        {social.youtube && (
+                          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all group cursor-pointer">
+                            <Youtube className="w-10 h-10 text-red-500 mb-4" />
+                            <div className="text-3xl font-black text-white mb-2">{formatFollowers(social.youtube.subscribers)}</div>
+                            <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">YouTube Subscribers</div>
+                          </div>
+                        )}
+                        {social.tiktok && (
+                          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all group cursor-pointer">
+                            <FaTiktok className="w-10 h-10 text-white mb-4" />
+                            <div className="text-3xl font-black text-white mb-2">{formatFollowers(social.tiktok.followers)}</div>
+                            <div className="text-sm font-bold text-slate-400 uppercase tracking-wider">TikTok Followers</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              } catch (e) {
+                return null;
+              }
+            })()}
+
+            {/* Gallery Section */}
+            {celebrity.gallery && (() => {
+              try {
+                const galleryImages = JSON.parse(celebrity.gallery);
+                return (
+                  <div className="bg-white rounded-[32px] p-10 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100">
+                    <h2 className="font-display text-4xl font-black text-slate-900 italic tracking-tight mb-8">
+                      GALLERY
+                    </h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {galleryImages.map((imageUrl: string, index: number) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer"
+                        >
+                          <img 
+                            src={imageUrl} 
+                            alt={`${celebrity.name} gallery ${index + 1}`}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              } catch (e) {
+                return null;
+              }
+            })()}
           </div>
 
           {/* Sidebar - Get Card CTA */}
           <div className="lg:col-span-4">
             <div className="sticky top-32 space-y-8">
+              {/* Fan Pass Card */}
               <div className="bg-slate-900 rounded-[32px] p-10 shadow-[0_40px_80px_-15px_rgba(15,23,42,0.3)] overflow-hidden relative group">
                 {/* Background effects */}
                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 blur-[100px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
@@ -206,6 +378,39 @@ export default function CelebrityProfile() {
                     Existing member? <Link href="/login" className="text-white hover:text-primary transition-colors">Sign in</Link>
                   </div>
                 </div>
+              </div>
+
+              {/* Tier Pricing Card */}
+              <div className="bg-white rounded-[32px] p-8 shadow-2xl shadow-slate-200/50 border border-slate-100">
+                <h3 className="font-display text-2xl font-black text-slate-900 mb-6">MEMBERSHIP TIERS</h3>
+                <div className="space-y-4">
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-black text-yellow-900 uppercase tracking-wider">Gold</span>
+                      <span className="text-2xl font-black text-yellow-900">$500</span>
+                    </div>
+                    <p className="text-xs text-yellow-800 font-medium">Essential access & priority booking</p>
+                  </div>
+                  
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-100 to-slate-200 border-2 border-slate-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-black text-slate-900 uppercase tracking-wider">Platinum</span>
+                      <span className="text-2xl font-black text-slate-900">$2,000</span>
+                    </div>
+                    <p className="text-xs text-slate-700 font-medium">VIP experiences & backstage access</p>
+                  </div>
+                  
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-800 to-black border-2 border-slate-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-black text-white uppercase tracking-wider">Black</span>
+                      <span className="text-2xl font-black text-white">$5,000</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-medium">Ultimate access & personal meetings</p>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-500 text-center mt-6 font-medium">
+                  *Annual subscription. Renews automatically.
+                </p>
               </div>
             </div>
           </div>
