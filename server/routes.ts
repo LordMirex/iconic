@@ -266,13 +266,10 @@ export async function registerRoutes(
     }
   });
 
-  // --- Seed Data ---
-  await seedDatabase();
-
   return httpServer;
 }
 
-async function seedDatabase() {
+export async function seedDatabase() {
   // Check if database already has data
   const celebs = await storage.getCelebrities();
   const existingUser = await storage.getUserByUsername("admin");
