@@ -1,5 +1,5 @@
 
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { pgTable, text, serial, boolean, timestamp, integer } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -7,22 +7,22 @@ import { z } from "zod";
 // === TABLE DEFINITIONS ===
 
 // Manager/Admin users (could be expanded, but for now just one manager context)
-export const users = sqliteTable("users", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(), // For simple auth, or we map to Replit Auth
-  isAdmin: integer("is_admin", { mode: 'boolean' }).default(true),
+  isAdmin: boolean("is_admin").default(true),
 });
 
-export const celebrities = sqliteTable("celebrities", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const celebrities = pgTable("celebrities", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(), // e.g., 'taylor-swift'
   bio: text("bio").notNull(),
   heroImage: text("hero_image").notNull(),
   avatarImage: text("avatar_image").notNull(),
   accentColor: text("accent_color").default("#3b82f6"), // Custom branding per celebrity
-  isFeatured: integer("is_featured", { mode: 'boolean' }).default(false),
+  isFeatured: boolean("is_featured").default(false),
   // Extended fields
   category: text("category").notNull().default("Musician"), // 'Musician', 'Actor', 'Athlete', 'Creator'
   fullBio: text("full_bio"), // Extended biography
@@ -32,21 +32,21 @@ export const celebrities = sqliteTable("celebrities", {
   gallery: text("gallery"), // JSON array of image URLs
 });
 
-export const events = sqliteTable("events", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const events = pgTable("events", {
+  id: serial("id").primaryKey(),
   celebrityId: integer("celebrity_id").notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  date: integer("date", { mode: 'timestamp' }).notNull(),
-  price: text("price").notNull(), // SQLite doesn't have decimal, using text for precision
+  date: timestamp("date").notNull(),
+  price: text("price").notNull(), // Using text for precision
   location: text("location").notNull(),
   type: text("type").notNull(), // 'concert', 'meet_greet', 'visitation'
   totalSlots: integer("total_slots").notNull(),
   bookedSlots: integer("booked_slots").default(0),
 });
 
-export const fanCards = sqliteTable("fan_cards", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const fanCards = pgTable("fan_cards", {
+  id: serial("id").primaryKey(),
   celebrityId: integer("celebrity_id").notNull(),
   cardCode: text("card_code").notNull().unique(), // Added unique constraint
   email: text("email").notNull(),
@@ -54,19 +54,19 @@ export const fanCards = sqliteTable("fan_cards", {
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
   cardType: text("card_type").notNull().default("digital"), // 'digital', 'physical'
   status: text("status").default("active"), // 'active', 'pending'
-  purchaseDate: integer("purchase_date", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
+  purchaseDate: timestamp("purchase_date").defaultNow(),
 });
 
-export const bookings = sqliteTable("bookings", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const bookings = pgTable("bookings", {
+  id: serial("id").primaryKey(),
   fanCardId: integer("fan_card_id").notNull(),
   eventId: integer("event_id").notNull(),
   status: text("status").default("confirmed"), // 'confirmed', 'cancelled'
-  createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(strftime('%s', 'now') * 1000)`),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const fanCardTiers = sqliteTable("fan_card_tiers", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const fanCardTiers = pgTable("fan_card_tiers", {
+  id: serial("id").primaryKey(),
   name: text("name").notNull().unique(), // 'Gold', 'Platinum', 'Black'
   basePrice: text("base_price").notNull(), // Base price for the tier
   features: text("features").notNull(), // JSON array of features

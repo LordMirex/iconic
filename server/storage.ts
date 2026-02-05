@@ -1,4 +1,3 @@
-
 import { db } from "./db";
 import { 
   celebrities, events, fanCards, bookings, users, fanCardTiers,
@@ -10,7 +9,7 @@ import {
   type User, type InsertUser,
   type FanLoginRequest
 } from "@shared/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 
 export interface IStorage {
   // Users
@@ -97,7 +96,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteCelebrity(id: number): Promise<boolean> {
     const result = await db.delete(celebrities).where(eq(celebrities.id, id));
-    return result.changes > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async getEventsByCelebrity(celebrityId: number): Promise<Event[]> {
@@ -128,7 +127,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteEvent(id: number): Promise<boolean> {
     const result = await db.delete(events).where(eq(events.id, id));
-    return result.changes > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async createFanCard(card: InsertFanCard): Promise<FanCard> {
@@ -186,12 +185,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async incrementEventBookedSlots(eventId: number): Promise<void> {
-    const [event] = await db.select().from(events).where(eq(events.id, eventId));
-    if (event) {
-      await db.update(events)
-        .set({ bookedSlots: (Number(event.bookedSlots) || 0) + 1 })
-        .where(eq(events.id, eventId));
-    }
+    await db.update(events)
+      .set({ bookedSlots: sql`${events.bookedSlots} + 1` })
+      .where(eq(events.id, eventId));
   }
 
   async getFanCardTiers(): Promise<FanCardTier[]> {
