@@ -2,8 +2,16 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import type { Request, Response, NextFunction } from 'express';
 
-// Secret key for JWT - in production, this should be in environment variables
-const JWT_SECRET = process.env.JWT_SECRET || 'iconic-secret-key-change-in-production';
+// Secret key for JWT - MUST be set in production
+const JWT_SECRET = process.env.JWT_SECRET || (() => {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('FATAL: JWT_SECRET environment variable must be set in production!');
+    process.exit(1);
+  }
+  // Only use fallback in development
+  console.warn('WARNING: Using default JWT secret. Set JWT_SECRET environment variable for production!');
+  return 'iconic-secret-key-dev-only';
+})();
 const JWT_EXPIRES_IN = '7d'; // Token expires in 7 days
 
 export interface JWTPayload {

@@ -23,6 +23,7 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/manager" component={Manager} />
+      {/* Manager sub-routes - using wildcard to handle future manager pages */}
       <Route path="/manager/:rest*" component={Manager} />
       <Route path="/settings" component={Settings} />
       <Route component={NotFound} />

@@ -286,13 +286,23 @@ async function seedDatabase() {
   
   // Create admin user with hashed password if doesn't exist
   if (!existingUser) {
-    const hashedPassword = await hashPassword("admin123"); // Changed default password
+    // Use environment variable for admin password, fallback to a default only in development
+    const adminPassword = process.env.ADMIN_PASSWORD || (() => {
+      if (process.env.NODE_ENV === 'production') {
+        console.error('FATAL: ADMIN_PASSWORD environment variable must be set in production!');
+        process.exit(1);
+      }
+      console.warn('WARNING: Using default admin password. Set ADMIN_PASSWORD environment variable for production!');
+      return 'admin123';
+    })();
+    
+    const hashedPassword = await hashPassword(adminPassword);
     await storage.createUser({
       username: "admin",
       password: hashedPassword,
       isAdmin: true
     });
-    console.log("Admin user created (username: admin, password: admin123)");
+    console.log(`Admin user created (username: admin${process.env.ADMIN_PASSWORD ? '' : ', password: admin123'})`);
   }
   
   // Only seed other data if no celebrities exist
