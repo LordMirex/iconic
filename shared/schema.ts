@@ -48,7 +48,7 @@ export const events = sqliteTable("events", {
 export const fanCards = sqliteTable("fan_cards", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   celebrityId: integer("celebrity_id").notNull(),
-  cardCode: text("card_code").notNull(), // Unique ID like "TAYLOR-1234"
+  cardCode: text("card_code").notNull().unique(), // Added unique constraint
   email: text("email").notNull(),
   fanName: text("fan_name").notNull().default(''),
   tier: text("tier").notNull(), // 'Gold', 'Platinum', 'Black'
@@ -115,8 +115,12 @@ export const insertEventSchema = createInsertSchema(events).omit({ id: true, boo
 export const insertFanCardSchema = createInsertSchema(fanCards).omit({ id: true, purchaseDate: true, status: true });
 export const insertBookingSchema = createInsertSchema(bookings).omit({ id: true, createdAt: true, status: true });
 export const insertFanCardTierSchema = createInsertSchema(fanCardTiers).omit({ id: true });
+export const insertUserSchema = createInsertSchema(users).omit({ id: true });
 
 // === TYPES ===
+
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
 
 export type Celebrity = typeof celebrities.$inferSelect;
 export type InsertCelebrity = z.infer<typeof insertCelebritySchema>;
