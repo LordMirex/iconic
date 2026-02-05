@@ -42,10 +42,45 @@ export async function registerRoutes(
     }
   });
 
+  // Protected: Update celebrity
+  app.put("/api/celebrities/:id", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const input = api.celebrities.create.input.partial().parse(req.body);
+      const celeb = await storage.updateCelebrity(id, input);
+      if (!celeb) return res.status(404).json({ message: "Celebrity not found" });
+      res.json(celeb);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid input", errors: e.errors });
+      } else {
+        res.status(400).json({ message: "Invalid input" });
+      }
+    }
+  });
+
+  // Protected: Delete celebrity
+  app.delete("/api/celebrities/:id", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const deleted = await storage.deleteCelebrity(id);
+      if (!deleted) return res.status(404).json({ message: "Celebrity not found" });
+      res.json({ message: "Celebrity deleted successfully" });
+    } catch (e) {
+      res.status(500).json({ message: "Failed to delete celebrity" });
+    }
+  });
+
   // --- Events ---
 
   app.get(api.events.listByCelebrity.path, async (req, res) => {
     const events = await storage.getEventsByCelebrity(Number(req.params.id));
+    res.json(events);
+  });
+
+  // Get all events (for manager)
+  app.get("/api/events", requireAuth, requireAdmin, async (req, res) => {
+    const events = await storage.getEvents();
     res.json(events);
   });
 
@@ -61,6 +96,35 @@ export async function registerRoutes(
       } else {
         res.status(400).json({ message: "Invalid input" });
       }
+    }
+  });
+
+  // Protected: Update event
+  app.put("/api/events/:id", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const input = api.events.create.input.partial().parse(req.body);
+      const event = await storage.updateEvent(id, input);
+      if (!event) return res.status(404).json({ message: "Event not found" });
+      res.json(event);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid input", errors: e.errors });
+      } else {
+        res.status(400).json({ message: "Invalid input" });
+      }
+    }
+  });
+
+  // Protected: Delete event
+  app.delete("/api/events/:id", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const deleted = await storage.deleteEvent(id);
+      if (!deleted) return res.status(404).json({ message: "Event not found" });
+      res.json({ message: "Event deleted successfully" });
+    } catch (e) {
+      res.status(500).json({ message: "Failed to delete event" });
     }
   });
 
@@ -118,10 +182,22 @@ export async function registerRoutes(
     res.json(card);
   });
 
+  // Get all fan cards (for manager)
+  app.get("/api/fancards", requireAuth, requireAdmin, async (req, res) => {
+    const cards = await storage.getFanCards();
+    res.json(cards);
+  });
+
   // --- Bookings ---
 
   app.get(api.bookings.listByFan.path, async (req, res) => {
     const bookings = await storage.getBookingsByFanCard(Number(req.params.id));
+    res.json(bookings);
+  });
+
+  // Get all bookings (for manager)
+  app.get("/api/bookings", requireAuth, requireAdmin, async (req, res) => {
+    const bookings = await storage.getBookings();
     res.json(bookings);
   });
 
