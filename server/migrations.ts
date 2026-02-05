@@ -10,6 +10,8 @@ export async function createTables() {
   
   try {
     // Create users table
+    // Note: is_admin defaults to true to match the schema in shared/schema.ts
+    // This is a pre-existing design decision in the application
     await db.execute(sql`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
