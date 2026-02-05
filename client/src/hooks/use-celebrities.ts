@@ -30,12 +30,22 @@ export function useCreateCelebrity() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: InsertCelebrity) => {
+      const token = localStorage.getItem("manager_token");
+      const headers: HeadersInit = { "Content-Type": "application/json" };
+      
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+      
       const res = await fetch(api.celebrities.create.path, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed to create celebrity");
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(error || "Failed to create celebrity");
+      }
       return api.celebrities.create.responses[201].parse(await res.json());
     },
     onSuccess: () => {
