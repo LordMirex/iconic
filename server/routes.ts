@@ -343,8 +343,8 @@ async function seedDatabase() {
       bio: "Global superstar, singer-songwriter, and 14-time Grammy winner known for her narrative songwriting.",
       fullBio: "Taylor Alison Swift is an American singer-songwriter who has transcended country music to become one of the biggest pop stars in the world. Known for her autobiographical songwriting and artistic reinventions, she has sold over 200 million records worldwide. Her Eras Tour became the highest-grossing tour of all time, and she's won 14 Grammy Awards including 4 Album of the Year awards.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1540575467063-17e6fc485380?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1493229656367-108529a9792e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/taylorswift-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/taylorswift-avatar/400/400",
       accentColor: "#be123c",
       isFeatured: true,
       careerStart: 2006,
@@ -362,8 +362,8 @@ async function seedDatabase() {
         youtube: "@TaylorSwift"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1511671782779/800/800",
+        "https://picsum.photos/seed/gallery-1514320291840/800/800"
       ])
     });
 
@@ -373,8 +373,8 @@ async function seedDatabase() {
       bio: "Canadian singer, songwriter, and record producer known for his sonic versatility and dark lyricism.",
       fullBio: "Abel Makkonen Tesfaye, known professionally as The Weeknd, is a Canadian singer, songwriter, and record producer. Known for his falsetto vocals and genre-bending style that blends R&B, pop, and electronic music, he has won 4 Grammy Awards and holds multiple Billboard records. His album 'After Hours' spawned the hit 'Blinding Lights', which became the most-streamed song on Spotify.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/theweeknd-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/theweeknd-avatar/400/400",
       accentColor: "#000000",
       isFeatured: true,
       careerStart: 2010,
@@ -392,8 +392,8 @@ async function seedDatabase() {
         youtube: "@TheWeeknd"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800",
+        "https://picsum.photos/seed/gallery-1501612780327/800/800"
       ])
     });
 
@@ -403,8 +403,8 @@ async function seedDatabase() {
       bio: "Pop powerhouse with a four-octave vocal range and chart-topping hits.",
       fullBio: "Ariana Grande-Butera is an American singer, songwriter, and actress. Known for her wide vocal range and whistle register, she has received numerous accolades including 2 Grammy Awards. She rose to fame with hits like 'Thank U, Next' and 'Problem', and has become one of the best-selling music artists with over 90 million records sold worldwide.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/arianagrande-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/arianagrande-avatar/400/400",
       accentColor: "#e7a4c5",
       isFeatured: true,
       careerStart: 2008,
@@ -422,8 +422,8 @@ async function seedDatabase() {
         youtube: "@ArianaGrande"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800",
+        "https://picsum.photos/seed/gallery-1511671782779/800/800"
       ])
     });
 
@@ -433,8 +433,8 @@ async function seedDatabase() {
       bio: "Canadian pop sensation discovered on YouTube, with multiple chart-topping albums.",
       fullBio: "Justin Drew Bieber is a Canadian singer who was discovered through YouTube in 2008. He has since become one of the best-selling music artists with over 150 million records sold worldwide. Known for hits like 'Baby', 'Sorry', and 'Peaches', he has won 2 Grammy Awards and holds 33 Guinness World Records.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1515041219749-89347f83291a?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/justinbieber-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/justinbieber-avatar/400/400",
       accentColor: "#9333ea",
       isFeatured: false,
       careerStart: 2008,
@@ -452,7 +452,7 @@ async function seedDatabase() {
         youtube: "@JustinBieber"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800"
       ])
     });
 
@@ -462,8 +462,8 @@ async function seedDatabase() {
       bio: "Gen Z icon with haunting vocals and genre-defying music.",
       fullBio: "Billie Eilish Pirate Baird O'Connell is an American singer-songwriter who gained attention with her debut single 'Ocean Eyes'. At 18, she became the youngest artist to win all four major Grammy categories in one year. Known for her distinctive style and whispery vocals, she's one of the biggest pop stars of her generation.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/billieeilish-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/billieeilish-avatar/400/400",
       accentColor: "#22c55e",
       isFeatured: true,
       careerStart: 2015,
@@ -481,8 +481,8 @@ async function seedDatabase() {
         youtube: "@BillieEilish"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800",
+        "https://picsum.photos/seed/gallery-1511671782779/800/800"
       ])
     });
 
@@ -492,8 +492,8 @@ async function seedDatabase() {
       bio: "Queen Bey, cultural icon, and one of the best-selling music artists of all time.",
       fullBio: "Beyoncé Giselle Knowles-Carter is an American singer, songwriter, and businesswoman. With 32 Grammy Awards, she's the most-awarded artist in Grammy history. From Destiny's Child to her legendary solo career, she has sold over 200 million records worldwide and is considered one of the greatest entertainers of all time.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/beyonce-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/beyonce-avatar/400/400",
       accentColor: "#f59e0b",
       isFeatured: true,
       careerStart: 1997,
@@ -511,8 +511,8 @@ async function seedDatabase() {
         youtube: "@Beyonce"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1514320291840/800/800",
+        "https://picsum.photos/seed/gallery-1511671782779/800/800"
       ])
     });
 
@@ -522,8 +522,8 @@ async function seedDatabase() {
       bio: "British-Albanian pop star with disco-influenced sound and empowering anthems.",
       fullBio: "Dua Lipa is an English and Albanian singer and songwriter. Her self-titled debut album spawned hits like 'New Rules' and 'IDGAF'. Her second album 'Future Nostalgia' won the Grammy for Best Pop Vocal Album and featured mega-hits like 'Don't Start Now' and 'Levitating'. She's one of the most-streamed female artists on Spotify.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1515041219749-89347f83291a?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/dualipa-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/dualipa-avatar/400/400",
       accentColor: "#ec4899",
       isFeatured: false,
       careerStart: 2015,
@@ -541,7 +541,7 @@ async function seedDatabase() {
         youtube: "@DuaLipa"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800"
       ])
     });
 
@@ -551,8 +551,8 @@ async function seedDatabase() {
       bio: "Canadian rapper and singer, one of the best-selling music artists globally.",
       fullBio: "Aubrey Drake Graham is a Canadian rapper, singer, and actor. He gained recognition as an actor on Degrassi before pursuing music. He holds several Billboard records including most charted songs and is one of the highest-certified digital singles artists. With over 170 million records sold, he's one of the best-selling artists of all time.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/drake-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/drake-avatar/400/400",
       accentColor: "#0ea5e9",
       isFeatured: false,
       careerStart: 2006,
@@ -570,7 +570,7 @@ async function seedDatabase() {
         youtube: "@Drake"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800"
       ])
     });
 
@@ -580,8 +580,8 @@ async function seedDatabase() {
       bio: "Puerto Rican Latin trap and reggaeton sensation dominating global charts.",
       fullBio: "Benito Antonio Martínez Ocasio, known as Bad Bunny, is a Puerto Rican rapper and singer. He's credited with helping bring Latin trap to mainstream music. Bad Bunny has been Spotify's most-streamed artist globally for three consecutive years (2020-2022) and his tours are among the highest-grossing of all time.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1515041219749-89347f83291a?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/badbunny-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/badbunny-avatar/400/400",
       accentColor: "#f97316",
       isFeatured: true,
       careerStart: 2016,
@@ -599,7 +599,7 @@ async function seedDatabase() {
         youtube: "@BadBunny"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1511671782779/800/800"
       ])
     });
 
@@ -609,8 +609,8 @@ async function seedDatabase() {
       bio: "Colombian superstar known as the Queen of Latin Music with iconic hip-shaking moves.",
       fullBio: "Shakira Isabel Mebarak Ripoll is a Colombian singer and songwriter. Known for her versatility and distinctive voice, she has sold over 95 million records worldwide. Her crossover English album 'Laundry Service' and hits like 'Hips Don't Lie' and 'Waka Waka' made her an international sensation.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/shakira-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/shakira-avatar/400/400",
       accentColor: "#eab308",
       isFeatured: false,
       careerStart: 1990,
@@ -628,7 +628,7 @@ async function seedDatabase() {
         youtube: "@Shakira"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800"
       ])
     });
 
@@ -638,8 +638,8 @@ async function seedDatabase() {
       bio: "Genre-blending artist known for melodic rap and rock-influenced sound.",
       fullBio: "Austin Richard Post, known as Post Malone, is an American rapper, singer, and songwriter. He first gained recognition with 'White Iverson' in 2015. Known for blending hip-hop, pop, R&B, and rock, his albums have broken multiple streaming records. He's won 10 Billboard Music Awards and received 6 Grammy nominations.",
       category: "Musician",
-      heroImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/postmalone-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/postmalone-avatar/400/400",
       accentColor: "#6366f1",
       isFeatured: false,
       careerStart: 2015,
@@ -657,7 +657,7 @@ async function seedDatabase() {
         youtube: "@PostMalone"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1493225457124/800/800"
       ])
     });
 
@@ -668,8 +668,8 @@ async function seedDatabase() {
       bio: "Portuguese football legend, 5-time Ballon d'Or winner, and all-time top scorer.",
       fullBio: "Cristiano Ronaldo dos Santos Aveiro is a Portuguese professional footballer who plays as a forward. Widely regarded as one of the greatest players of all time, he has won 5 Ballon d'Or awards and is the all-time top scorer in football history. He's also the most-followed person on Instagram with over 600 million followers.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/cristianoronaldo-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/cristianoronaldo-avatar/400/400",
       accentColor: "#dc2626",
       isFeatured: true,
       careerStart: 2002,
@@ -687,8 +687,8 @@ async function seedDatabase() {
         youtube: "@Cristiano"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1571781926291/800/800",
+        "https://picsum.photos/seed/gallery-1522778526097/800/800"
       ])
     });
 
@@ -698,8 +698,8 @@ async function seedDatabase() {
       bio: "Argentine football wizard, 8-time Ballon d'Or winner, and World Cup champion.",
       fullBio: "Lionel Andrés Messi is an Argentine professional footballer who plays as a forward for Inter Miami and captains Argentina. With 8 Ballon d'Or awards, he holds the record for most wins. In 2022, he led Argentina to World Cup victory, cementing his legacy as one of the greatest players of all time.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/lionelmessi-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/lionelmessi-avatar/400/400",
       accentColor: "#3b82f6",
       isFeatured: true,
       careerStart: 2004,
@@ -717,7 +717,7 @@ async function seedDatabase() {
         youtube: "@leomessi"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1579952363873/800/800"
       ])
     });
 
@@ -727,8 +727,8 @@ async function seedDatabase() {
       bio: "Indian cricket superstar and former captain, known for his exceptional batting.",
       fullBio: "Virat Kohli is an Indian international cricketer and former captain of the Indian national team. Widely regarded as one of the greatest batsmen of all time, he has scored over 26,000 international runs. He's also one of the most followed athletes on social media globally.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1546185845-c37bbaf28cb9?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/viratkohli-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/viratkohli-avatar/400/400",
       accentColor: "#0ea5e9",
       isFeatured: false,
       careerStart: 2008,
@@ -746,7 +746,7 @@ async function seedDatabase() {
         youtube: "@ViratKohli"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1571781926291/800/800"
       ])
     });
 
@@ -756,8 +756,8 @@ async function seedDatabase() {
       bio: "NBA legend and 4-time champion, considered one of the greatest basketball players ever.",
       fullBio: "LeBron Raymone James is an American professional basketball player for the Los Angeles Lakers. A four-time NBA champion and MVP, he's the all-time leading scorer in NBA history. Beyond basketball, he's a successful businessman, producer, and philanthropist.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1520262454473-a1a82276a574?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/lebronjames-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/lebronjames-avatar/400/400",
       accentColor: "#7c2d12",
       isFeatured: false,
       careerStart: 2003,
@@ -775,7 +775,7 @@ async function seedDatabase() {
         youtube: "@KingJames"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1546519638/800/800"
       ])
     });
 
@@ -785,8 +785,8 @@ async function seedDatabase() {
       bio: "Brazilian football star known for dazzling skills and flair on the pitch.",
       fullBio: "Neymar da Silva Santos Júnior is a Brazilian professional footballer who plays as a forward. Known for his dribbling, speed, and creativity, he's one of the most marketable athletes in the world. He was part of Barcelona's legendary MSN trio and is Brazil's all-time top scorer.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/neymar-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/neymar-avatar/400/400",
       accentColor: "#fbbf24",
       isFeatured: false,
       careerStart: 2009,
@@ -804,7 +804,7 @@ async function seedDatabase() {
         youtube: "@neymarjr"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1579952363873/800/800"
       ])
     });
 
@@ -814,8 +814,8 @@ async function seedDatabase() {
       bio: "French football prodigy and World Cup winner known for lightning speed.",
       fullBio: "Kylian Mbappé Lottin is a French professional footballer who plays as a forward for Real Madrid and France. A World Cup winner at 19, he's regarded as one of the best players in the world. Known for his explosive speed and clinical finishing, he's the face of modern football.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/kylianmbappe-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/kylianmbappe-avatar/400/400",
       accentColor: "#1e40af",
       isFeatured: true,
       careerStart: 2015,
@@ -833,7 +833,7 @@ async function seedDatabase() {
         youtube: "@KMbappe"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1579952363873/800/800"
       ])
     });
 
@@ -843,8 +843,8 @@ async function seedDatabase() {
       bio: "Most decorated gymnast in history with record-breaking Olympic and World medals.",
       fullBio: "Simone Arianne Biles is an American artistic gymnast. With 37 Olympic and World Championship medals, she's the most decorated gymnast in history. Known for her gravity-defying skills and mental health advocacy, she's widely regarded as the greatest gymnast of all time.",
       category: "Athlete",
-      heroImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1508215885820-4585e56135c8?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/simonebiles-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/simonebiles-avatar/400/400",
       accentColor: "#ec4899",
       isFeatured: false,
       careerStart: 2013,
@@ -862,7 +862,7 @@ async function seedDatabase() {
         youtube: "@SimoneBiles"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1534438327276/800/800"
       ])
     });
 
@@ -873,8 +873,8 @@ async function seedDatabase() {
       bio: "Emmy-winning actress and fashion icon known for Euphoria and Spider-Man.",
       fullBio: "Zendaya Maree Stoermer Coleman is an American actress and singer. She rose to fame with Disney Channel's Shake It Up and became a critical darling with her Emmy-winning performance in HBO's Euphoria. She's also known for playing MJ in the Spider-Man franchise and her impeccable fashion sense.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/zendaya-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/zendaya-avatar/400/400",
       accentColor: "#8b5cf6",
       isFeatured: true,
       careerStart: 2009,
@@ -892,8 +892,8 @@ async function seedDatabase() {
         youtube: "@Zendaya"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
-        "https://images.unsplash.com/photo-1512310604669-443f26c35f52?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1485846234645/800/800",
+        "https://picsum.photos/seed/gallery-1512310604669/800/800"
       ])
     });
 
@@ -903,8 +903,8 @@ async function seedDatabase() {
       bio: "Oscar-nominated actor and heartthrob known for Dune and Call Me By Your Name.",
       fullBio: "Timothée Hal Chalamet is an American and French actor. He gained recognition with his Oscar-nominated performance in Call Me By Your Name and became a leading man with roles in Little Women, Dune, and Wonka. He's regarded as one of the best actors of his generation.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/timotheechalamet-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/timotheechalamet-avatar/400/400",
       accentColor: "#14b8a6",
       isFeatured: false,
       careerStart: 2007,
@@ -922,7 +922,7 @@ async function seedDatabase() {
         youtube: "@TimotheeChalamet"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1500648767791/800/800"
       ])
     });
 
@@ -932,8 +932,8 @@ async function seedDatabase() {
       bio: "Hollywood superstar, rapper, and producer with decades of blockbuster hits.",
       fullBio: "Willard Carroll Smith II is an American actor, rapper, and producer. From The Fresh Prince of Bel-Air to Men in Black, Independence Day, and his Oscar-winning performance in King Richard, he's one of Hollywood's most bankable stars. He has four Grammy Awards and has been nominated for five Golden Globe Awards.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/willsmith-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/willsmith-avatar/400/400",
       accentColor: "#059669",
       isFeatured: false,
       careerStart: 1985,
@@ -951,7 +951,7 @@ async function seedDatabase() {
         youtube: "@WillSmith"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1500648767791/800/800"
       ])
     });
 
@@ -961,8 +961,8 @@ async function seedDatabase() {
       bio: "Music icon, fashion mogul, and billionaire entrepreneur.",
       fullBio: "Robyn Rihanna Fenty is a Barbadian singer, actress, and businesswoman. With 14 number-one singles, she's one of the best-selling music artists. Her Fenty Beauty brand revolutionized the beauty industry. In 2023, she headlined the Super Bowl Halftime Show and is officially a billionaire.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/rihanna-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/rihanna-avatar/400/400",
       accentColor: "#ef4444",
       isFeatured: false,
       careerStart: 2003,
@@ -980,7 +980,7 @@ async function seedDatabase() {
         youtube: "@Rihanna"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1485846234645/800/800"
       ])
     });
 
@@ -990,8 +990,8 @@ async function seedDatabase() {
       bio: "Multi-hyphenate superstar: singer, actress, dancer, and business mogul.",
       fullBio: "Jennifer Lynn Affleck, known as Jennifer Lopez or J.Lo, is an American singer, actress, and dancer. She's the first Hispanic actress to earn over $1 million for a film and has sold over 80 million records. A true triple threat, she's one of the most influential Latin entertainers.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/jenniferlopez-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/jenniferlopez-avatar/400/400",
       accentColor: "#f97316",
       isFeatured: false,
       careerStart: 1991,
@@ -1009,7 +1009,7 @@ async function seedDatabase() {
         youtube: "@JLo"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1485846234645/800/800"
       ])
     });
 
@@ -1019,8 +1019,8 @@ async function seedDatabase() {
       bio: "The Rock - former WWE champion turned highest-paid Hollywood action star.",
       fullBio: "Dwayne Douglas Johnson, also known as The Rock, is an American actor, producer, and former professional wrestler. He's been named the world's highest-paid actor multiple times and his films have grossed over $10.5 billion worldwide. He's also a successful businessman and philanthropist.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/dwaynejohnson-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/dwaynejohnson-avatar/400/400",
       accentColor: "#78350f",
       isFeatured: false,
       careerStart: 1996,
@@ -1038,7 +1038,7 @@ async function seedDatabase() {
         youtube: "@TheRock"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1500648767791/800/800"
       ])
     });
 
@@ -1048,8 +1048,8 @@ async function seedDatabase() {
       bio: "Singer, actress, producer, and beauty mogul with massive social media influence.",
       fullBio: "Selena Marie Gomez is an American singer, actress, producer, and businesswoman. From Disney Channel to chart-topping music and her Emmy-nominated role in Only Murders in the Building, she's a multi-faceted star. Her Rare Beauty brand and mental health advocacy have made her an influential voice.",
       category: "Actor",
-      heroImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/selenagomez-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/selenagomez-avatar/400/400",
       accentColor: "#db2777",
       isFeatured: true,
       careerStart: 2002,
@@ -1067,7 +1067,7 @@ async function seedDatabase() {
         youtube: "@SelenaGomez"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1485846234645/800/800"
       ])
     });
 
@@ -1078,8 +1078,8 @@ async function seedDatabase() {
       bio: "YouTube's biggest philanthropist known for viral challenges and giveaways.",
       fullBio: "James Stephen 'Jimmy' Donaldson, better known as MrBeast, is an American YouTuber and philanthropist. Known for his expensive stunts and philanthropy, he has over 250 million subscribers across his channels. He's pioneered a new genre of YouTube content and launched multiple successful businesses.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/mrbeast-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/mrbeast-avatar/400/400",
       accentColor: "#06b6d4",
       isFeatured: true,
       careerStart: 2012,
@@ -1097,7 +1097,7 @@ async function seedDatabase() {
         youtube: "@MrBeast"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1611162616475/800/800"
       ])
     });
 
@@ -1107,8 +1107,8 @@ async function seedDatabase() {
       bio: "TikTok's first megastar and most-followed creator on the platform.",
       fullBio: "Charli Grace D'Amelio is an American social media personality and dancer. She was the first person to earn 100 million followers on TikTok and is the most-followed creator on the platform. She's expanded into music, business ventures, and her family's Hulu reality series.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/charlidamelio-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/charlidamelio-avatar/400/400",
       accentColor: "#a855f7",
       isFeatured: false,
       careerStart: 2019,
@@ -1126,7 +1126,7 @@ async function seedDatabase() {
         youtube: "@CharliDAmelio"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1516280440614/800/800"
       ])
     });
 
@@ -1136,8 +1136,8 @@ async function seedDatabase() {
       bio: "TikTok's most-followed creator known for silent, sarcastic comedy videos.",
       fullBio: "Khabane 'Khaby' Lame is a Senegalese-Italian social media personality. He became famous for his silent, deadpan comedy videos where he sarcastically mocks overcomplicated life hack videos. Without saying a word, he became the most-followed person on TikTok with over 160 million followers.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/khabylame-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/khabylame-avatar/400/400",
       accentColor: "#eab308",
       isFeatured: false,
       careerStart: 2020,
@@ -1155,7 +1155,7 @@ async function seedDatabase() {
         youtube: "@KhabyLame"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1611162616475/800/800"
       ])
     });
 
@@ -1165,8 +1165,8 @@ async function seedDatabase() {
       bio: "TikTok star turned actress, singer, and beauty entrepreneur.",
       fullBio: "Addison Rae Easterling is an American social media personality, actress, and singer. She gained fame on TikTok and has successfully transitioned to acting, music, and business. She launched her beauty line Item Beauty and starred in Netflix's 'He's All That'. She's one of the highest-earning TikTok stars.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/addisonrae-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/addisonrae-avatar/400/400",
       accentColor: "#f472b6",
       isFeatured: false,
       careerStart: 2019,
@@ -1184,7 +1184,7 @@ async function seedDatabase() {
         youtube: "@AddisonRae"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1516280440614/800/800"
       ])
     });
 
@@ -1194,8 +1194,8 @@ async function seedDatabase() {
       bio: "Reality TV mogul, beauty entrepreneur, and billionaire businesswoman.",
       fullBio: "Kimberly Noel Kardashian is an American media personality, socialite, and businesswoman. She gained fame through 'Keeping Up with the Kardashians' and built a business empire with KKW Beauty and SKIMS. With over 350 million Instagram followers, she's one of the most influential people in fashion and beauty.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/kimkardashian-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/kimkardashian-avatar/400/400",
       accentColor: "#18181b",
       isFeatured: true,
       careerStart: 2007,
@@ -1213,7 +1213,7 @@ async function seedDatabase() {
         youtube: "@KimKardashian"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1485846234645/800/800"
       ])
     });
 
@@ -1223,8 +1223,8 @@ async function seedDatabase() {
       bio: "Gen Z YouTube icon known for relatable vlogs and coffee empire.",
       fullBio: "Emma Frances Chamberlain is an American YouTuber, podcaster, and businesswoman. She pioneered a new style of vlogging characterized by fast-paced editing and relatability. She launched her coffee company Chamberlain Coffee and has become a fashion icon, attending Met Galas and Paris Fashion Weeks.",
       category: "Creator",
-      heroImage: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=2000",
-      avatarImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+      heroImage: "https://picsum.photos/seed/emmachamberlain-hero/2000/2000",
+      avatarImage: "https://picsum.photos/seed/emmachamberlain-avatar/400/400",
       accentColor: "#16a34a",
       isFeatured: false,
       careerStart: 2017,
@@ -1242,7 +1242,7 @@ async function seedDatabase() {
         youtube: "@emmachamberlain"
       }),
       gallery: JSON.stringify([
-        "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800"
+        "https://picsum.photos/seed/gallery-1516280440614/800/800"
       ])
     });
 
