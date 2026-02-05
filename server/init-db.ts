@@ -3,6 +3,14 @@ import { db } from "./db";
 import { createTables } from "./migrations";
 
 /**
+ * Seeds the database by dynamically importing and calling the seedDatabase function
+ */
+async function runSeedDatabase() {
+  const { seedDatabase } = await import("./routes");
+  await seedDatabase();
+}
+
+/**
  * Initializes the database by creating tables and seeding data if needed.
  * This function is called on server startup to ensure the database is ready.
  */
@@ -30,21 +38,24 @@ export async function initializeDatabase() {
     }
     
     // Seed the database with initial data
-    // We import seedDatabase dynamically to avoid circular dependency issues
+    // The seedDatabase function has its own check for existing data
     console.log("Checking if seeding is needed...");
-    const { seedDatabase } = await import("./routes");
-    await seedDatabase();
+    await runSeedDatabase();
     console.log("Database initialization complete!");
   } catch (error) {
     console.error("Database initialization error:", error);
     
-    // If error is about table not existing, try to create them
-    if (error instanceof Error && error.message.includes("does not exist")) {
+    // If error indicates missing tables, attempt recovery
+    const errorMessage = error instanceof Error ? error.message.toLowerCase() : '';
+    const isTableMissingError = errorMessage.includes("does not exist") || 
+                                errorMessage.includes("relation") ||
+                                errorMessage.includes("table");
+    
+    if (isTableMissingError) {
       console.log("Attempting to create tables after error...");
       try {
         await createTables();
-        const { seedDatabase } = await import("./routes");
-        await seedDatabase();
+        await runSeedDatabase();
         console.log("Database recovered and initialized successfully!");
       } catch (recoveryError) {
         console.error("Failed to recover database:", recoveryError);
