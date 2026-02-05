@@ -25,19 +25,16 @@ export async function initializeDatabase() {
       console.log("Database tables do not exist. Creating tables...");
       await createTables();
       console.log("Database tables created successfully!");
-      
-      // Seed the database with initial data
-      // We import seedDatabase dynamically to avoid circular dependency issues
-      console.log("Seeding database with initial data...");
-      const { seedDatabase } = await import("./routes");
-      await seedDatabase();
-      console.log("Database initialization complete!");
     } else {
-      console.log("Database tables already exist. Checking if seeding is needed...");
-      // The seedDatabase function has its own check for existing data
-      const { seedDatabase } = await import("./routes");
-      await seedDatabase();
+      console.log("Database tables already exist.");
     }
+    
+    // Seed the database with initial data
+    // We import seedDatabase dynamically to avoid circular dependency issues
+    console.log("Checking if seeding is needed...");
+    const { seedDatabase } = await import("./routes");
+    await seedDatabase();
+    console.log("Database initialization complete!");
   } catch (error) {
     console.error("Database initialization error:", error);
     
