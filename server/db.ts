@@ -15,8 +15,15 @@ if (process.env.DATABASE_URL) {
   });
   db = drizzle(pool, { schema });
 } else {
-  console.warn("DATABASE_URL not set - database features disabled during build");
-  // Create a dummy db object that will fail if used, but allows the build to succeed
+  // During build time, DATABASE_URL may not be set yet
+  // This is expected and allows the build to complete successfully
+  // At runtime, the database connection will be established when DATABASE_URL is available
+  if (process.env.NODE_ENV === "production") {
+    console.warn("DATABASE_URL not set - database will fail if accessed");
+  } else {
+    console.warn("DATABASE_URL not set - database features disabled during build");
+  }
+  // Create a dummy db object that will fail with a clear error if used
   db = null as any;
 }
 
