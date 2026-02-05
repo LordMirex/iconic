@@ -10,6 +10,8 @@ if (!process.env.DATABASE_URL) {
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  // Railway and many managed PostgreSQL services use self-signed certificates
+  // Setting rejectUnauthorized: false is required for these services in production
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
 });
 
