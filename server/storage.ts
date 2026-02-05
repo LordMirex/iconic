@@ -23,16 +23,22 @@ export interface IStorage {
   getCelebrityBySlug(slug: string): Promise<Celebrity | undefined>;
   getCelebrity(id: number): Promise<Celebrity | undefined>;
   createCelebrity(celebrity: InsertCelebrity): Promise<Celebrity>;
+  updateCelebrity(id: number, celebrity: Partial<InsertCelebrity>): Promise<Celebrity | undefined>;
+  deleteCelebrity(id: number): Promise<boolean>;
 
   // Events
   getEventsByCelebrity(celebrityId: number): Promise<Event[]>;
   getEvent(id: number): Promise<Event | undefined>;
+  getEvents(): Promise<Event[]>;
   createEvent(event: InsertEvent): Promise<Event>;
+  updateEvent(id: number, event: Partial<InsertEvent>): Promise<Event | undefined>;
+  deleteEvent(id: number): Promise<boolean>;
   
   // Fan Cards
   createFanCard(card: InsertFanCard): Promise<FanCard>;
   getFanCardByCodeAndEmail(code: string, email: string): Promise<FanCard | undefined>;
   getFanCard(id: number): Promise<FanCard | undefined>;
+  getFanCards(): Promise<FanCard[]>;
   
   // Fan Card Tiers
   getFanCardTiers(): Promise<FanCardTier[]>;
@@ -41,6 +47,7 @@ export interface IStorage {
   // Bookings
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBookingsByFanCard(fanCardId: number): Promise<(Booking & { event: Event })[]>;
+  getBookings(): Promise<Booking[]>;
   incrementEventBookedSlots(eventId: number): Promise<void>;
 }
 
@@ -80,6 +87,19 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async updateCelebrity(id: number, celebrity: Partial<InsertCelebrity>): Promise<Celebrity | undefined> {
+    const [result] = await db.update(celebrities)
+      .set(celebrity)
+      .where(eq(celebrities.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteCelebrity(id: number): Promise<boolean> {
+    const result = await db.delete(celebrities).where(eq(celebrities.id, id));
+    return result.changes > 0;
+  }
+
   async getEventsByCelebrity(celebrityId: number): Promise<Event[]> {
     return await db.select().from(events).where(eq(events.celebrityId, celebrityId));
   }
@@ -89,9 +109,26 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async getEvents(): Promise<Event[]> {
+    return await db.select().from(events);
+  }
+
   async createEvent(event: InsertEvent): Promise<Event> {
     const [result] = await db.insert(events).values(event).returning();
     return result;
+  }
+
+  async updateEvent(id: number, event: Partial<InsertEvent>): Promise<Event | undefined> {
+    const [result] = await db.update(events)
+      .set(event)
+      .where(eq(events.id, id))
+      .returning();
+    return result;
+  }
+
+  async deleteEvent(id: number): Promise<boolean> {
+    const result = await db.delete(events).where(eq(events.id, id));
+    return result.changes > 0;
   }
 
   async createFanCard(card: InsertFanCard): Promise<FanCard> {
@@ -123,6 +160,10 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async getFanCards(): Promise<FanCard[]> {
+    return await db.select().from(fanCards);
+  }
+
   async createBooking(booking: InsertBooking): Promise<Booking> {
     const [result] = await db.insert(bookings).values(booking).returning();
     return result;
@@ -138,6 +179,10 @@ export class DatabaseStorage implements IStorage {
     .where(eq(bookings.fanCardId, fanCardId));
 
     return results.map(r => ({ ...r.booking, event: r.event }));
+  }
+
+  async getBookings(): Promise<Booking[]> {
+    return await db.select().from(bookings);
   }
 
   async incrementEventBookedSlots(eventId: number): Promise<void> {
