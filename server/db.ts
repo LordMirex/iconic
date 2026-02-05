@@ -4,15 +4,20 @@ import * as schema from "@shared/schema";
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is required");
+let db: ReturnType<typeof drizzle>;
+
+if (process.env.DATABASE_URL) {
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    // Railway and many managed PostgreSQL services use self-signed certificates
+    // Setting rejectUnauthorized: false is required for these services in production
+    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+  });
+  db = drizzle(pool, { schema });
+} else {
+  console.warn("DATABASE_URL not set - database features disabled during build");
+  // Create a dummy db object that will fail if used, but allows the build to succeed
+  db = null as any;
 }
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  // Railway and many managed PostgreSQL services use self-signed certificates
-  // Setting rejectUnauthorized: false is required for these services in production
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
-
-export const db = drizzle(pool, { schema });
+export { db };
