@@ -28,12 +28,22 @@ export function useCreateEvent() {
         price: data.price.toString() // decimal expects string or number
       };
       
+      const token = localStorage.getItem("manager_token");
+      const headers: HeadersInit = { "Content-Type": "application/json" };
+      
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+      
       const res = await fetch(api.events.create.path, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Failed to create event");
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(error || "Failed to create event");
+      }
       return api.events.create.responses[201].parse(await res.json());
     },
     onSuccess: (_, variables) => {

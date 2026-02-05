@@ -21,7 +21,8 @@ export async function registerRoutes(
   });
 
   app.get(api.celebrities.get.path, async (req, res) => {
-    const celeb = await storage.getCelebrityBySlug(req.params.slug);
+    const slug = Array.isArray(req.params.slug) ? req.params.slug[0] : req.params.slug;
+    const celeb = await storage.getCelebrityBySlug(slug);
     if (!celeb) return res.status(404).json({ message: "Celebrity not found" });
     res.json(celeb);
   });
@@ -1631,8 +1632,7 @@ async function seedDatabase() {
       celebrityId: taylorSwift.id,
       cardCode: "TAYLOR",
       email: "demo@fan.com",
-      tier: "Platinum",
-      status: "active"
+      tier: "Platinum"
     });
     
     console.log("Database seeded successfully");
