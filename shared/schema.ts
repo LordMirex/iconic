@@ -10,7 +10,7 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
-  password: text("password").notNull(), // For simple auth, or we map to Replit Auth
+  password: text("password").notNull(), // For simple auth
   isAdmin: boolean("is_admin").default(true),
 });
 
