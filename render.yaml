@@ -1,0 +1,26 @@
+databases:
+  - name: iconic-db
+    databaseName: iconic
+    user: iconic
+    plan: free
+
+services:
+  - type: web
+    name: iconic
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: iconic-db
+          property: connectionString
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
