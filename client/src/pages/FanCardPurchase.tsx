@@ -137,7 +137,13 @@ export default function FanCardPurchase() {
               <h3 className="font-display text-2xl font-black text-slate-900 tracking-tight">Select Your Tier</h3>
               <div className="grid gap-6">
                 {fanCardTiers?.map(tier => {
-                  const features = JSON.parse(tier.features);
+                  let features: string[] = [];
+                  try {
+                    features = JSON.parse(tier.features);
+                  } catch (e) {
+                    console.error("Failed to parse tier features:", e);
+                    features = [];
+                  }
                   const tierColorMap: Record<string, string> = {
                     Gold: "from-yellow-400 to-yellow-600",
                     Platinum: "from-slate-300 to-slate-500",

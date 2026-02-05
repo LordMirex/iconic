@@ -6,6 +6,7 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import { db } from "./db";
 import { fanCardTiers } from "@shared/schema";
+import { requireAuth, requireAdmin, generateToken, comparePassword, hashPassword } from "./auth";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -25,13 +26,18 @@ export async function registerRoutes(
     res.json(celeb);
   });
 
-  app.post(api.celebrities.create.path, async (req, res) => {
+  // Protected: Only authenticated managers can create celebrities
+  app.post(api.celebrities.create.path, requireAuth, requireAdmin, async (req, res) => {
     try {
       const input = api.celebrities.create.input.parse(req.body);
       const celeb = await storage.createCelebrity(input);
       res.status(201).json(celeb);
     } catch (e) {
-      res.status(400).json({ message: "Invalid input" });
+      if (e instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid input", errors: e.errors });
+      } else {
+        res.status(400).json({ message: "Invalid input" });
+      }
     }
   });
 
@@ -42,13 +48,18 @@ export async function registerRoutes(
     res.json(events);
   });
 
-  app.post(api.events.create.path, async (req, res) => {
+  // Protected: Only authenticated managers can create events
+  app.post(api.events.create.path, requireAuth, requireAdmin, async (req, res) => {
     try {
       const input = api.events.create.input.parse(req.body);
       const event = await storage.createEvent(input);
       res.status(201).json(event);
     } catch (e) {
-      res.status(400).json({ message: "Invalid input" });
+      if (e instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid input", errors: e.errors });
+      } else {
+        res.status(400).json({ message: "Invalid input" });
+      }
     }
   });
 
@@ -137,17 +148,44 @@ export async function registerRoutes(
   app.post("/api/manager/login", async (req, res) => {
     try {
       const { username, password } = req.body;
-      if (username === "admin" && password === "admin") {
-        res.json({
-          success: true,
-          token: "manager_token_admin",
-          user: { id: 1, username: "admin", isAdmin: true }
-        });
-      } else {
-        res.status(401).json({ message: "Invalid credentials" });
+      
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
       }
+      
+      // Find user by username
+      const user = await storage.getUserByUsername(username);
+      
+      if (!user) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+      
+      // Compare password with hashed password
+      const isPasswordValid = await comparePassword(password, user.password);
+      
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+      
+      // Generate JWT token
+      const token = generateToken({
+        userId: user.id,
+        username: user.username,
+        isAdmin: user.isAdmin || false
+      });
+      
+      res.json({
+        success: true,
+        token,
+        user: { 
+          id: user.id, 
+          username: user.username, 
+          isAdmin: user.isAdmin 
+        }
+      });
     } catch (e) {
-      res.status(400).json({ message: "Invalid request" });
+      console.error("Login error:", e);
+      res.status(500).json({ message: "An error occurred during login. Please try again." });
     }
   });
 
@@ -158,34 +196,58 @@ export async function registerRoutes(
 }
 
 async function seedDatabase() {
+  // Check if database already has data
   const celebs = await storage.getCelebrities();
+  const existingUser = await storage.getUserByUsername("admin");
+  
+  if (celebs.length > 0 && existingUser) {
+    console.log("Database already seeded, skipping...");
+    return;
+  }
+  
+  console.log("Seeding database...");
+  
+  // Create admin user with hashed password if doesn't exist
+  if (!existingUser) {
+    const hashedPassword = await hashPassword("admin123"); // Changed default password
+    await storage.createUser({
+      username: "admin",
+      password: hashedPassword,
+      isAdmin: true
+    });
+    console.log("Admin user created (username: admin, password: admin123)");
+  }
+  
+  // Only seed other data if no celebrities exist
   if (celebs.length === 0) {
-    console.log("Seeding database...");
-    
     // Seed Fan Card Tiers first
-    await db.insert(fanCardTiers).values([
-      {
-        name: "Gold",
-        basePrice: "500.00",
-        description: "Premium access with exclusive perks",
-        features: JSON.stringify(["Priority event booking", "10% merchandise discount", "Monthly newsletter", "Digital collectibles"]),
-        color: "#FFD700"
-      },
-      {
-        name: "Platinum",
-        basePrice: "2000.00",
-        description: "Elite tier with VIP benefits",
-        features: JSON.stringify(["All Gold benefits", "VIP event access", "Meet & greet opportunities", "20% merchandise discount", "Exclusive content", "Birthday gift"]),
-        color: "#E5E4E2"
-      },
-      {
-        name: "Black",
-        basePrice: "5000.00",
-        description: "Ultimate fan experience",
-        features: JSON.stringify(["All Platinum benefits", "Backstage access", "Personal video messages", "30% merchandise discount", "Exclusive merchandise", "Concert priority seating", "Annual VIP event"]),
-        color: "#1a1a1a"
-      }
-    ]);
+    try {
+      await db.insert(fanCardTiers).values([
+        {
+          name: "Gold",
+          basePrice: "500.00",
+          description: "Premium access with exclusive perks",
+          features: JSON.stringify(["Priority event booking", "10% merchandise discount", "Monthly newsletter", "Digital collectibles"]),
+          color: "#FFD700"
+        },
+        {
+          name: "Platinum",
+          basePrice: "2000.00",
+          description: "Elite tier with VIP benefits",
+          features: JSON.stringify(["All Gold benefits", "VIP event access", "Meet & greet opportunities", "20% merchandise discount", "Exclusive content", "Birthday gift"]),
+          color: "#E5E4E2"
+        },
+        {
+          name: "Black",
+          basePrice: "5000.00",
+          description: "Ultimate fan experience",
+          features: JSON.stringify(["All Platinum benefits", "Backstage access", "Personal video messages", "30% merchandise discount", "Exclusive merchandise", "Concert priority seating", "Annual VIP event"]),
+          color: "#1a1a1a"
+        }
+      ]);
+    } catch (e) {
+      console.log("Fan card tiers already seeded or error:", e);
+    }
 
     // === MUSICIANS ===
     const taylorSwift = await storage.createCelebrity({

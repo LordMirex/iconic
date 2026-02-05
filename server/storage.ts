@@ -7,11 +7,17 @@ import {
   type FanCard, type InsertFanCard,
   type Booking, type InsertBooking,
   type FanCardTier, type InsertFanCardTier,
+  type User, type InsertUser,
   type FanLoginRequest
 } from "@shared/schema";
 import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
+  // Users
+  getUser(id: number): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+  
   // Celebrities
   getCelebrities(): Promise<Celebrity[]>;
   getCelebrityBySlug(slug: string): Promise<Celebrity | undefined>;
@@ -39,6 +45,22 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [result] = await db.select().from(users).where(eq(users.id, id));
+    return result;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [result] = await db.select().from(users).where(eq(users.username, username));
+    return result;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const [result] = await db.insert(users).values(user).returning();
+    return result;
+  }
+
   async getCelebrities(): Promise<Celebrity[]> {
     return await db.select().from(celebrities);
   }
